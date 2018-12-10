@@ -23,12 +23,20 @@ img {
     image-orientation: from-image;
 }
 
+.card {
+    margin: 3em;
+    border: 1px solid #777777; 
+}
+
 .card img {
-    width: 80%;
-    display: block;
+    width: 43%;
+    display: inline;
     margin-left: auto;
-    margin-right: auto;
-    margin-top: 2em;
+    margin-right: 3em;
+}
+
+.feed {
+    width: 80%;
 }
 
 .sidebar {
