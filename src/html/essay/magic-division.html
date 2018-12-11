@@ -1,69 +1,74 @@
 <!doctype html>
 <html lang="en">
- <head>
-  <title>Magic Division</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  
- </head>
- <body>
+
+<head>
+    <title>Magic Division</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+</head>
+
+<body>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <div class="essay">
         <h2>Magic Division -- Or Division by Integer Multiplication</h2>
 
-        <p>I noticed something strange in the assembly generated when compiling a program 
+        <p>I noticed something strange in the assembly generated when compiling a program
             using <code>gcc</code> an optimization turned off. Here it is in <a href="#figure1">Figure 1</a>
             (though using optimization level 3 just to simplify, but it still shows in level 0).
-            In this generated assembly, we see instead of using the <code>div</code> operator, 
-            something strange is going on with the number 1717986919 and shifting. My first 
-            attempts at searching for this phenomenon online were not helpful. The first result 
-            for the number was on Amazon as a book identifier. This number also shows up on 
-            stack overflow, however it is no more helpful. No one on the post is talking about 
-            why this number is in the generated code (or perhaps they all know this arcane 
-            secret and don’t wish share). Eventually, I found out what was going on. Even 
-            with no optimization, the compiler prefers to generate multiplication operator 
+            In this generated assembly, we see instead of using the <code>div</code> operator,
+            something strange is going on with the number 1717986919 and shifting. My first
+            attempts at searching for this phenomenon online were not helpful. The first result
+            for the number was on Amazon as a book identifier. This number also shows up on
+            stack overflow, however it is no more helpful. No one on the post is talking about
+            why this number is in the generated code (or perhaps they all know this arcane
+            secret and don’t wish share). Eventually, I found out what was going on. Even
+            with no optimization, the compiler prefers to generate multiplication operator
             over the division operator.
         </p>
-        <p>We will consider unsigned integer division first. Let 
-            <span class="math inline"><em>d</em></span> 
-            be some constant divisor, and <span class="math inline"><em>n</em></span> 
-            our numerator (for now let’s make <span class="math inline"><em>n</em></span> 
-            a multiple of <span class="math inline"><em>d</em></span>). We will assume 
-            integers are 32 bits. In order to computer 
-            <span class="math inline"><em>n</em>/<em>d</em></span>, 
-            first we need to know the values <span class="math inline"><em>l</em></span> 
-            and <span class="math inline"><em>i</em></span> where 
-            <span class="math inline"><em>d</em> = <em>l</em>2<sup><em>i</em></sup></span>. 
-            So to begin out division, we can shift <span class="math inline"><em>n</em></span> 
-            by <span class="math inline"><em>i</em></span> bits. Now we must divide this result 
-            be <span class="math inline"><em>l</em></span>. Since 
-            <span class="math inline"><em>l</em></span> will be odd, there exists some 
-            inverse of <span class="math inline"><em>l</em></span>, called 
+        <p>We will consider unsigned integer division first. Let
+            <span class="math inline"><em>d</em></span>
+            be some constant divisor, and <span class="math inline"><em>n</em></span>
+            our numerator (for now let’s make <span class="math inline"><em>n</em></span>
+            a multiple of <span class="math inline"><em>d</em></span>). We will assume
+            integers are 32 bits. In order to computer
+            <span class="math inline"><em>n</em>/<em>d</em></span>,
+            first we need to know the values <span class="math inline"><em>l</em></span>
+            and <span class="math inline"><em>i</em></span> where
+            <span class="math inline"><em>d</em> = <em>l</em>2<sup><em>i</em></sup></span>.
+            So to begin out division, we can shift <span class="math inline"><em>n</em></span>
+            by <span class="math inline"><em>i</em></span> bits. Now we must divide this result
+            be <span class="math inline"><em>l</em></span>. Since
+            <span class="math inline"><em>l</em></span> will be odd, there exists some
+            inverse of <span class="math inline"><em>l</em></span>, called
             <span class="math inline"><em>j</em></span> where <br />
-            <span class="math display"><em>l</em><em>j</em> = 1(mod 2<sup>32</sup>)</span><br /> 
-            So for any number <span class="math inline"><em>x</em></span>, 
-            <span class="math inline"><em>x</em>/<em>l</em> = (<em>x</em><em>j</em>)/(<em>l</em><em>j</em>)=<em>x</em><em>j</em></span>. 
-            So now all that is left after the shift is to multiply by 
-            <span class="math inline"><em>j</em></span>, and we will 
+            <span class="math display"><em>l</em><em>j</em> = 1(mod 2<sup>32</sup>)</span><br />
+            So for any number <span class="math inline"><em>x</em></span>,
+            <span class="math inline"><em>x</em>/<em>l</em> = (<em>x</em><em>j</em>)/(<em>l</em><em>j</em>)=<em>x</em><em>j</em></span>.
+            So now all that is left after the shift is to multiply by
+            <span class="math inline"><em>j</em></span>, and we will
             have computed <span class="math inline"><em>n</em>/<em>d</em></span>.</p>
-        <p>Dealing with remainder can go pretty in depth, and I recommend 
-            reading the chapter in Hacker’s Delight about this topic 
+        <p>Dealing with remainder can go pretty in depth, and I recommend
+            reading the chapter in Hacker’s Delight about this topic
             <a class="citation" href="#hacker">[1]</a>. Another write up can be found
             in the MSDN blog archive <a class="citation" href="#msdn">[2]</a>.
         </p>
 
         <div class="figure">
-        <a name="figure1"><h4>Figure 1</h4></a>
-        <span>Source:</span>
-        <div class="sourceCode" frame="single" numbers="left" language="c">
-        <pre><code class="sourceCode">
+            <a name="figure1">
+                <h4>Figure 1</h4>
+            </a>
+            <span>Source:</span>
+            <div class="sourceCode" frame="single" numbers="left" language="c">
+                <pre><code class="sourceCode">
 int div20(int n){
     return a/20;
 }
-        </code></pre></div>
-        <span>Compiled excerpt:</span>
-        <div class="sourceCode" frame="single" numbers="left">
-            <pre><code class="sourceCode">
+        </code></pre>
+            </div>
+            <span>Compiled excerpt:</span>
+            <div class="sourceCode" frame="single" numbers="left">
+                <pre><code class="sourceCode">
 .cfi_startproc
 movl    %edi, %eax
 movl    $1717986919, %edx
@@ -74,22 +79,24 @@ movl    %edx, %eax
 subl    %edi, %eax
 ret
 .cfi_endproc
-        </code></pre></div>
+        </code></pre>
+            </div>
         </div>
 
         <h3>References</h3>
-        <p><a name="hacker">1</a> Hacker’s Delight Chapter 10. 
+        <p><a name="hacker">1</a> Hacker’s Delight Chapter 10.
             (<em><a href="http://www.hackersdelight.org/divcMore.pdf">
-                http://www.hackersdelight.org/divcMore.pdf
+                    http://www.hackersdelight.org/divcMore.pdf
                 </a>
             </em>)
         </p>
-        <p><a name="msdn">2</a> MSDN Blog Archive 
+        <p><a name="msdn">2</a> MSDN Blog Archive
             (<em><a href="https://blogs.msdn.microsoft.com/devdev/2005/12/12/integer-division-by-constants/">
-                https://blogs.msdn.microsoft.com/devdev/2005/12/12/integer-division-by-constants/
+                    https://blogs.msdn.microsoft.com/devdev/2005/12/12/integer-division-by-constants/
                 </a>
             </em>)
         </p>
     </div>
-    </body>
+</body>
+
 </html>
