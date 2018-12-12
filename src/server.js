@@ -12,6 +12,7 @@ function setUpRoutes(){
     server.get('/', (req, res) => res.sendFile(__dirname + "/html/index.html"))
     server.get('/bread', (req, res) => res.sendFile(__dirname + "/html/bread.html"));
     server.get('/essay', (req, res) => res.sendFile(__dirname + "/html/essay.html"));
+    server.get('/snake', (req, res) => res.sendFile(__dirname + "/html/snake.html"));
 
 
     server.get('/css/:id', (req, res) => {
