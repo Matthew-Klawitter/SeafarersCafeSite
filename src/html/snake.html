@@ -9,150 +9,185 @@
 </head>
 
 <body>
-
-    <center>
-        <canvas width="400" height="600" id="canvas"></canvas>
-    </center>
+    <canvas id="canvas"></canvas>
     <script>
         var gameInterval;
+        var canvas;
+        var ctx;
+
+        var tileCountWidth;
+        var tileCountHeight;
+        var tileWidth;
+        var tileHeight;
+        var vx;
+        var vy;
+        var score;
+        var t;
+        var apple;
+        var isGameOver;
+        var mouseX;
+        var mouseY;
+        var length;
+
+        function init() {
+            tileCountWidth = 40
+            tileCountHeight = 40
+            tileWidth = 10;
+            tileHeight = 10;
+            snake = { body: [] };
+            length = 5;
+            setRandomCoords(snake);
+            apple = {};
+            setRandomCoords(apple);
+            vx = 1;
+            vy = 0;
+            score = 0;
+            isGameOver = false;
+            mouseX = 0;
+            mouseY = 0;
+            t = 0;
+        }
+
         window.onload = function () {
             canvas = document.getElementById("canvas");
             ctx = canvas.getContext("2d");
-            //        canvas.height = 300;
-            //        canvas.width = 400;    
+
+            window.addEventListener('resize', resizeCanvas, false);
+            window.addEventListener('orientationchange', resizeCanvas, false);
+            resizeCanvas();
+
             document.addEventListener("keydown", keyPush);
             document.addEventListener("mousedown", mousePush);
             gameInterval = setInterval(game, 1000 / 10);
+
+            init();
         }
-        var tileCountWidth = 40;
-        var tileCountHeight = 40;
-        var tileWidth = 10//canvas.width / tileCountWidth;
-        var tileHeight = 10//canvas.height / tileCountHeight;
-        var snake = [];
-        var x = randomInt(tileWidth);
-        var y = randomInt(tileHeight);
-        var vx = 1;
-        var vy = 0;
-        var score = 0;
-        var t = 0;
-        var apple = {};
-        var isGameOver = false;
-        var mouseX =0;
-        var mouseY = 0;
-        console.log(apple);
-        setRandomCoords(apple);
-        console.log(apple);
-        var length = 5;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
         function game() {
             update();
             draw();
         }
-        function draw(){
+        function draw() {
             color("black");
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+//            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillRect(0, 0, 400,400);
             color("white");
             ctx.fillRect(0, 400, 400, 410);
-            for (var i = 0; i < snake.length; i++) {
-                ctx.fillRect(snake[i].x * tileWidth, snake[i].y * tileHeight, tileWidth, tileHeight);
+            for (var i = 0; i < snake.body.length; i++) {
+                ctx.fillRect(snake.body[i].x * tileWidth, snake.body[i].y * tileHeight, tileWidth, tileHeight);
             }
             color("red");
             ctx.fillRect(apple.x * tileWidth, apple.y * tileHeight, tileWidth, tileHeight);
 
             font(20);
             color("black");
-            ctx.fillText("Score: "+score,20,450); 
-            ctx.fillText(mouseX + " " + mouseY, 20, 500);
+            ctx.fillText("Score: " + score, 20, 450);
+            // ctx.fillText(mouseX + " " + mouseY, 20, 500);
 
             color("orange");
             // ctx.fillRect(210, 410, 390, 590)
             ctx.beginPath();
-            ctx.arc(300, 500, 95, 0, 2 * Math.PI);
-            ctx.stroke(); 
+            ctx.arc(300, 500, 100, 0, 2 * Math.PI);
+            ctx.stroke();
             color("black");
             ctx.beginPath();
             ctx.moveTo(210, 410);
             ctx.lineTo(390, 590);
             ctx.moveTo(390, 410);
             ctx.lineTo(210, 590);
-            ctx.stroke(); 
+            ctx.stroke();
 
-            if(isGameOver){
+            if (isGameOver) {
                 color("red");
                 font(20);
-                ctx.fillText("Game over!",180,200); 
+                ctx.fillText("Game over!", 160, 200);
+                font(14);
+                ctx.fillText("(tap to restart)", 152, 220);
             }
         }
 
-        function update(){
+        function update() {
             t++;
-            x += vx;
-            y += vy;
-            if (x < 0 || x >= tileCountWidth || y < 0 || y >= tileCountHeight)
+            snake.x += vx;
+            snake.y += vy;
+            if (snake.x < 0 || snake.x >= tileCountWidth || snake.y < 0 || snake.y >= tileCountHeight)
                 gameOver();
 
             // if(snake.some((piece) => {return piece.x = x && piece.y == y;})){
             //     gameOver();
             // }
 
-            snake.push({ "x": x, "y": y });
-            if (x == apple.x && y == apple.y) {
+            snake.body.push({ "x": snake.x, "y": snake.y });
+            if (snake.x == apple.x && snake.y == apple.y) {
                 length++;
                 setRandomCoords(apple);
-                score += 10 + max(50-t, 0)
+                score += 10 + max(50 - t, 0)
                 t = 0;
             }
 
-            while (snake.length > length) {
-                snake.shift();
+            while (snake.body.length > length) {
+                snake.body.shift();
             }
         }
-        function max(a, b){
+        function max(a, b) {
             return a > b ? a : b;
         }
         function keyPush(e) {
+            console.log(vx, vy);
             switch (e.keyCode) {
                 case 37:
+                    if (vx == 1) return;
                     vx = -1;
                     vy = 0;
                     break;
                 case 38:
+                    if (vy == 1) return;
                     vx = 0;
                     vy = -1;
                     break;
                 case 39:
+                    if (vx == -1) return;
                     vx = 1;
                     vy = 0;
                     break;
                 case 40:
+                    if (vy == -1) return;
                     vx = 0;
                     vy = 1;
                     break;
             }
         }
-        function mousePush(e){
-            mouseX = e.clientX - 420;
-            mouseY = e.clientY - 510;
-            console.log(mouseX, mouseY);
-
-            if(Math.sqrt(mouseX*mouseX+mouseY*mouseY) > 95){
+        function mousePush(e) {
+            if(isGameOver){
+                init();
                 return;
             }
 
-            if(Math.abs(mouseX) > Math.abs(mouseY)){
-                if(mouseX < 0){
-                    vx = -1;
-                    vy = 0;
-                } else{
-                    vx = 1;
-                    vy = 0;
+            mouseX = e.clientX - 300;
+            mouseY = e.clientY - 500;
+            var d = canvas.getBoundingClientRect();
+            mouseX -= d.left;
+            mouseY -= d.top;
+
+            if (Math.sqrt(mouseX * mouseX + mouseY * mouseY) > 100) {
+                return;
+            }
+
+            if (Math.abs(mouseX) > Math.abs(mouseY)) {
+                if (mouseX < 0) {
+                    keyPush({keyCode:  37})
+                } else {
+                    keyPush({keyCode:  39})
                 }
             } else {
-                if(mouseY < 0){
-                    vx = 0;
-                    vy = -1;
-                } else{
-                    vx = 0;
-                    vy = 1;
+                if (mouseY < 0) {
+                    keyPush({keyCode:  38})
+                } else {
+                    keyPush({keyCode:  40})
                 }
             }
         }
@@ -169,7 +204,7 @@
         function color(c) {
             ctx.fillStyle = c;
         }
-        function gameOver(){
+        function gameOver() {
             isGameOver = true;
             clearInterval(gameInterval);
         }
