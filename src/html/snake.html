@@ -37,6 +37,8 @@
         var t = 0;
         var apple = {};
         var isGameOver = false;
+        var mouseX =0;
+        var mouseY = 0;
         console.log(apple);
         setRandomCoords(apple);
         console.log(apple);
@@ -59,6 +61,7 @@
             font(20);
             color("black");
             ctx.fillText("Score: "+score,20,450); 
+            ctx.fillText(mouseX + " " + mouseY, 20, 500);
 
             color("orange");
             // ctx.fillRect(210, 410, 390, 590)
@@ -127,16 +130,16 @@
             }
         }
         function mousePush(e){
-            var x = e.clientX - 420;
-            var y = e.clientY - 510;
-            console.log(x, y);
+            mouseX = e.clientX - 420;
+            mouseY = e.clientY - 510;
+            console.log(mouseX, mouseY);
 
-            if(Math.sqrt(x*x+y*y) > 95){
+            if(Math.sqrt(mouseX*mouseX+mouseY*mouseY) > 95){
                 return;
             }
 
-            if(Math.abs(x) > Math.abs(y)){
-                if(x < 0){
+            if(Math.abs(mouseX) > Math.abs(mouseY)){
+                if(mouseX < 0){
                     vx = -1;
                     vy = 0;
                 } else{
@@ -144,7 +147,7 @@
                     vy = 0;
                 }
             } else {
-                if(y < 0){
+                if(mouseY < 0){
                     vx = 0;
                     vy = -1;
                 } else{
