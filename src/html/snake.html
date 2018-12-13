@@ -206,9 +206,8 @@
             const urlParams = new URLSearchParams(window.location.search);
             const uid = urlParams.get('uid');
             const mid = urlParams.get('mid');
-            const cid = urlParams.get('cid');
 
-            const request = new Request(`/setScore?uid=${uid}&cid=${cid}&mid=${mid}&score=${score}`);
+            const request = new Request(`/setScore?uid=${uid}&mid=${mid}&score=${score}`);
             fetch(request).then(response => console.log("response"));
         }
     </script>
