@@ -1,4 +1,5 @@
 const express = require('express');
+const request = require('request');
 
 const port = 80;
 
@@ -13,6 +14,10 @@ function setUpRoutes(){
     server.get('/bread', (req, res) => res.sendFile(__dirname + "/html/bread.html"));
     server.get('/essay', (req, res) => res.sendFile(__dirname + "/html/essay.html"));
     server.get('/snake', (req, res) => res.sendFile(__dirname + "/html/snake.html"));
+    server.get('/setScore', (req, res) => {
+        request(`http://localhost:8000?${req.url.split("?")[1]}`, function(error, response, body) {
+        });
+    })
 
 
     server.get('/css/:id', (req, res) => {
