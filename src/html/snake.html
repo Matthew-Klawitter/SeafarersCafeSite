@@ -207,10 +207,8 @@
             const uid = urlParams.get('uid');
             const mid = urlParams.get('mid');
             const cid = urlParams.get('cid');
-            console.log(uid, mid, cid);
 
             const request = new Request(`/setScore?uid=${uid}&cid=${cid}&mid=${mid}&score=${score}`);
-            console.log(request)
             fetch(request).then(response => console.log("response"));
         }
     </script>
