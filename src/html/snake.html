@@ -8,26 +8,12 @@
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 
-<body>
+<body style="padding:0; margin:0; overflow:hidden;">
     <canvas id="canvas"></canvas>
     <script>
-        var gameInterval;
-        var canvas;
-        var ctx;
-
-        var tileCountWidth;
-        var tileCountHeight;
-        var tileWidth;
-        var tileHeight;
-        var vx;
-        var vy;
-        var score;
-        var t;
-        var apple;
-        var isGameOver;
-        var mouseX;
-        var mouseY;
-        var length;
+        var gameInterval, canvas, ctx;
+        var tileCountWidth,tileCountHeight, tileWidth, tileHeight, vx, vy;
+        var score, t, apple, isGameOver, mouseX, mouseY, length, scaleX, scaleY, selected;
 
         function init() {
             tileCountWidth = 40
@@ -46,19 +32,20 @@
             mouseX = 0;
             mouseY = 0;
             t = 0;
+            selected = -1;
+            gameInterval = setInterval(game, 1000 / 10);
         }
 
         window.onload = function () {
             canvas = document.getElementById("canvas");
             ctx = canvas.getContext("2d");
 
+            document.addEventListener("keydown", keyPush);
+            document.addEventListener("mousedown", mousePush);
+
             window.addEventListener('resize', resizeCanvas, false);
             window.addEventListener('orientationchange', resizeCanvas, false);
             resizeCanvas();
-
-            document.addEventListener("keydown", keyPush);
-            document.addEventListener("mousedown", mousePush);
-            gameInterval = setInterval(game, 1000 / 10);
 
             init();
         }
@@ -66,6 +53,13 @@
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            scaleX = window.innerWidth/400; 
+            scaleY = window.innerHeight/600;
+
+            if(scaleX/scaleY > 1.3){
+                scaleX = scaleY = 1;
+            }
+            ctx.scale(scaleX, scaleY);
         }
         function game() {
             update();
@@ -86,20 +80,23 @@
             font(20);
             color("black");
             ctx.fillText("Score: " + score, 20, 450);
-            // ctx.fillText(mouseX + " " + mouseY, 20, 500);
 
-            color("orange");
-            // ctx.fillRect(210, 410, 390, 590)
-            ctx.beginPath();
-            ctx.arc(300, 500, 100, 0, 2 * Math.PI);
-            ctx.stroke();
-            color("black");
-            ctx.beginPath();
-            ctx.moveTo(210, 410);
-            ctx.lineTo(390, 590);
-            ctx.moveTo(390, 410);
-            ctx.lineTo(210, 590);
-            ctx.stroke();
+            for(var i = 0; i < 4; i++){
+                color("#ff9900");
+                if(selected == i){
+                    color("#cc9900")
+                } 
+                ctx.beginPath();
+                ctx.moveTo(300, 500);
+                ctx.arc(300, 500, 100, (i+1/2)*(Math.PI/2), (i+3/2)*(Math.PI/2));
+                ctx.fill();
+                color("black");
+                ctx.beginPath();
+                ctx.moveTo(300, 500);
+                ctx.arc(300, 500, 100, (i+1/2)*(Math.PI/2), (i+3/2)*(Math.PI/2));
+                ctx.stroke();
+            }
+            selected = -1;
 
             if (isGameOver) {
                 color("red");
@@ -137,7 +134,10 @@
             return a > b ? a : b;
         }
         function keyPush(e) {
-            console.log(vx, vy);
+            if(isGameOver){
+                init();
+                return;
+            }
             switch (e.keyCode) {
                 case 37:
                     if (vx == 1) return;
@@ -162,17 +162,8 @@
             }
         }
         function mousePush(e) {
-            if(isGameOver){
-                init();
-                return;
-            }
-
-            mouseX = e.clientX - 300;
-            mouseY = e.clientY - 500;
-            var d = canvas.getBoundingClientRect();
-            mouseX -= d.left;
-            mouseY -= d.top;
-
+            mouseX = e.clientX/scaleX - 300;
+            mouseY = e.clientY/scaleY - 500;
             if (Math.sqrt(mouseX * mouseX + mouseY * mouseY) > 100) {
                 return;
             }
@@ -180,14 +171,18 @@
             if (Math.abs(mouseX) > Math.abs(mouseY)) {
                 if (mouseX < 0) {
                     keyPush({keyCode:  37})
+                    selected = 1;
                 } else {
                     keyPush({keyCode:  39})
+                    selected = 3;
                 }
             } else {
                 if (mouseY < 0) {
                     keyPush({keyCode:  38})
+                    selected = 2;
                 } else {
                     keyPush({keyCode:  40})
+                    selected = 0;
                 }
             }
         }
