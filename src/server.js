@@ -20,6 +20,7 @@ function setUpRoutes(){
     })
 
 
+    server.get('/favicon.ico', (req, res) => res.sendFile(__dirname + "/icon/favicon.ico"))
     server.get('/css/:id', (req, res) => {
         res.sendFile(__dirname + "/css/"+req.params.id);
     });
