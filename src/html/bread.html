@@ -5,109 +5,36 @@
     <title>Mark's Kitchen - Bread</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        window.onload = function () {
+            fetch(new Request('/posts.json')).then(response => response.json())
+                .then(response => {
+                    var feed = new Vue({
+                        el: '.feed',
+                        data: { posts: response.data }
+                    })
+                });
+        }
+
+    </script>
 </head>
 
 <body>
-    <!-- <div class="container"> -->
     <div>
-        <br>
         <h1>Bread</h1>
         Some highlights (and lowlights) of breadmaking
         <div class="feed">
-            <div class="card">
-                <p class="card-text">A good looking loaf. Made a batch of 3 the next day, which took a toll on my
-                    banneton, leaving a lot of residue.</p>
+            <div class="card" v-for="post in posts">
+                <p class="card-text">{{ post.description }}</p>
                 <div class="card-img">
-                    <img src="photo/pretty.jpg">
+                    <span v-for="image in post.images">
+                        <a v-bind:href="image"><img v-bind:src="image"></a>
+                    </span>
                 </div>
-                <br>
-                <p class="date">Dec 4, 2018</p>
-            </div>
-            <div class="card">
-                <p class="card-text">Made some pizza crust, it was delicious. The dough was awfully thick, probably
-                    shouldn't have used it all.</p>
-                <div class="card-img">
-                    <img src="photo/pizza1.jpg">
-                    <img src="photo/pizza2.jpg">
-                </div>
-                <br>
-                <p class="date">Nov 21, 2018</p>
-            </div>
-            <div class="card">
-                <p class="card-text">Another nice no-knead recipie</p>
-                <div class="card-img">
-                    <img src="photo/good1.jpg">
-                    <img src="photo/good2.jpg">
-                </div>
-                <br>
-                <p class="date">Nov 16, 2018</p>
-            </div>
-            <div class="card">
-                <p class="card-text">Tried to make something more sandwich-y. 4 hour warm proof with wheat, rye,
-                    and corn flours. A bit dense, but not bad.</p>
-                <div class="card-img">
-                    <img src="photo/wheat.jpg">
-                </div>
-                <br>
-                <p class="date">Sep 30, 2018</p>
-            </div>
-            <div class="card">
-                <p class="card-text">A twist on normal beer bread, using hard cider.</p>
-                <div class="card-img">
-                    <img src="photo/cider.jpg">
-                </div>
-                <br>
-                <p class="date">Sep 30, 2018</p>
-            </div>
-            <div class="card">
-                <p class="card-text">I wanted to try the NY Times no knead recipie. Bread turned out delicious.
-                    Will try to tranfer to a loaf shape next time for slices.</p>
-                <div class="card-img">
-                    <img src="photo/nyt1.jpg">
-                    <img src="photo/nyt2.jpg">
-                </div>
-                <br>
-                <p class="date">Sep 27, 2018</p>
-            </div>
-            <div class="card">
-                <p class="card-text">First time using a banneton, beautiful shape. Tried a different knead style
-                    too. Rye-AP mix</p>
-                <div class="card-img">
-                    <img src="photo/ban1.jpg">
-                    <img src="photo/ban2.jpg">
-                </div>
-                <br>
-                <p class="date">Sep 19, 2018</p>
-            </div>
-            <div class="card">
-                <p class="card-text">Severely messed up the recipie this time. Tried to double to get two loafs,
-                    both turned out flat.</p>
-                <div class="card-img">
-                    <img src="photo/flat1.jpg">
-                    <img src="photo/flat2.jpg">
-                </div>
-                <br>
-                <p class="date">Aug 30, 2018</p>
-            </div>
-            <div class="card">
-                <p class="card-text">Used more white flour this time</p>
-                <div class="card-img">
-                    <img src="photo/white-1.jpg">
-                    <img src="photo/white-2.jpg">
-                </div>
-                <br>
-                <p class="date">Aug 16, 2018</p>
-            </div>
-            <div class="card">
-                <p class="card-text">First sourdough, mainly wheat</p>
-                <div class="card-img">
-                    <img src="photo/first-1.jpg">
-                    <img src="photo/first-2.jpg">
-                </div>
-                <br>
-                <p class="date">Aug 9, 2018</p>
+                <p class="date">{{ post.createdAt.substring(0,10) }}</p>
             </div>
         </div>
     </div>
