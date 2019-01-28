@@ -34,8 +34,12 @@ function setUpModels(){
     const models = {
         "posts": database.define('posts', {
             description: {
-            type: Sequelize.STRING,
-            allowNull: false,
+              type: Sequelize.TEXT,
+              allowNull: false,
+            },
+            type: {
+              type: Sequelize.STRING,
+              allowNull: false,
             },
             }),
         "pictures": database.define('pictures', {

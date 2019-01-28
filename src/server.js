@@ -18,9 +18,12 @@ function setUpRoutes(models){
         request(`http://localhost:8000?${req.url.split("?")[1]}`, function(error, response, body) {
         });
     })
-    server.get('/posts.json', async (req, res, next) =>  {
+    server.get('/:type/posts.json', async (req, res, next) =>  {
         try {
-            var posts = await models.posts.findAll();
+            const { type } = req.params;
+            console.log(type);
+            console.log(req.params);
+            var posts = await models.posts.findAll({where: { type: type }});
             posts = posts.map(x => x.get({ plain: true }));            
             for (const post of posts) {
               const images = await models.pictures.findAll({ attributes: ["source"], where: { postId: post.id } }).map(x => x.source);

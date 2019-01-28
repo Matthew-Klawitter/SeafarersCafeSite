@@ -8,6 +8,22 @@
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <link rel="shortcut icon" href="/favicon.ico">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <script>
+        window.onload = function () {
+            var feed = new Vue({
+                el: '.feed',
+                data: {
+                    posts: []
+                },
+                created() {
+                    fetch(new Request('/index/posts.json')).then(response => response.json())
+                        .then(response => this.posts = response.data);
+                }
+            });
+        }
+    </script>
 </head>
 
 <body>
@@ -21,13 +37,14 @@
         </nav>
 
         <div class="feed">
-            <div class="card item">
-                <div class="card-body">
-                    <p class="card-text">
-                        Welcome to marks.kitchen. Check out my <a href="/bread">bread</a>!
-                    </p>
+            <div class="card" v-for="post in posts">
+                <p class="card-text">{{ post.description }}</p>
+                <div class="card-img">
+                    <span v-for="image in post.images">
+                        <a v-bind:href="image"><img v-bind:src="image"></a>
+                    </span>
                 </div>
-                <p class="date">Dec 10, 2018</p>
+                <p class="date">{{ post.createdAt.substring(0,10) }}</p>
             </div>
         </div>
     </div>
