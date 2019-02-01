@@ -18,7 +18,7 @@
                     posts: []
                 },
                 created() {
-                    fetch(new Request('/index/posts.json')).then(response => response.json())
+                    fetch(new Request('/posts/index')).then(response => response.json())
                         .then(response => this.posts = response.data);
                 }
             });

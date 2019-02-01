@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Mark's Kitchen - Admin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+
+<body>
+    <div>
+        <h1>Create Post</h1>
+        <div class="form">
+            <form action="/posts" method="post" enctype="multipart/form-data">
+                <div>
+                    <textarea rows="4" cols="50" name="description"></textarea> 
+                </div>
+                <div>
+                    Images: <input type="file" name="images" multiple>
+                </div>
+                <div>
+                    <select name="type">
+                        <option value="" disabled selected>Select...</option>
+                        <option value="bread">Bread</option>
+                        <option value="index">Index</option>
+                    </select> 
+                </div>
+                <input type="submit">
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

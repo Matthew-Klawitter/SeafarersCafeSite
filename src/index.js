@@ -40,8 +40,7 @@ function setUpModels(){
             type: {
               type: Sequelize.STRING,
               allowNull: false,
-            },
-            }),
+            },}),
         "pictures": database.define('pictures', {
             source: { type: Sequelize.TEXT, allowNull: false},
           })
