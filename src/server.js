@@ -41,7 +41,9 @@ function setUpRoutes(models, jwtFunctions){
         if(req.path.startsWith("/admin")){
             let cookie = req.cookies.authorization
             if (!cookie) {
+                console.debug("Redirecting to login - no cookie")
                 res.redirect('/login');
+                return;
             }    
             try {
                 const decryptedUserId = jwtFunctions.verify(cookie);
@@ -49,7 +51,9 @@ function setUpRoutes(models, jwtFunctions){
                     if (user) {
                         res.locals.user = user.get({ plain: true });
                     } else {
+                        console.debug("Redirecting to login - invalid cookie")
                         res.redirect('/login');
+                        return;
                     }
                 });
             } catch (e){
@@ -87,7 +91,6 @@ function setUpRoutes(models, jwtFunctions){
     })
     server.post('/posts', upload.array('images'), async (req, res, next) =>  {
         try {
-            console.log(req.body);
             const type = req.body.type
             const newPost = await models.posts.create(req.body);
             req.files.forEach(async (file) => {
@@ -102,17 +105,17 @@ function setUpRoutes(models, jwtFunctions){
         }
     })
     server.post('/login', async (req, res, next) => {
-        console.log(req.body);
         const hash = crypto.createHash("sha512").update(req.body.password, "binary").digest("base64");
-        console.log(hash);
         const user = await models.users.findOne({where: { username: req.body.username, password: hash }})
         if(user){
             const token = jwtFunctions.sign(user.username);
+            res.cookie('authorization',token);
+            console.debug("Redirecting to admin - logged in")
             res.redirect('/admin');
         } else {
+            console.debug("Redirecting to login - invalid login")
             res.redirect('/login');
         }
-        next();
     })
 
 
