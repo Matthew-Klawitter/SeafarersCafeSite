@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const request = require('request');
+const crypto = require('crypto');
 
 const multer = require('multer');
 var storage = multer.diskStorage({
@@ -8,13 +10,10 @@ var storage = multer.diskStorage({
       cb(null, 'src/uploads/')
     },
     filename: function (req, file, cb) {
-        console.log(file);
         var ext = "";
         if(file.originalname.includes(".")){
             ext = "." + file.originalname.split(".")[1];
-            console.log(ext);
         }
-        console.log(ext);
         return cb(null, 'img-' + Date.now()+ext)
     }
   })
@@ -24,21 +23,46 @@ const port = 80;
 
 const server = express();
 // server.use(bodyParser.json());
+server.use(cookieParser())
 server.use(bodyParser.urlencoded({ extended: true }));
+// Route logging
 server.use(function (req, res, next) {
     console.debug("express:", req.method, req.originalUrl);
     next()
 })
 
-
 function listen(){
     server.listen(port, () => console.info(`Listening on port ${port}!`));
 }
 
-function setUpRoutes(models){
+function setUpRoutes(models, jwtFunctions){
+    // Authentication routine
+    server.use(function(req, res, next) {
+        if(req.path.startsWith("/admin")){
+            let cookie = req.cookies.authorization
+            if (!cookie) {
+                res.redirect('/login');
+            }    
+            try {
+                const decryptedUserId = jwtFunctions.verify(cookie);
+                models.users.findOne({where: {username: decryptedUserId}}).then((user, error) => {
+                    if (user) {
+                        res.locals.user = user.get({ plain: true });
+                    } else {
+                        res.redirect('/login');
+                    }
+                });
+            } catch (e){
+                res.status(400).send(e.message);
+            }
+        }
+        next();
+    })
+
     server.get('/', (req, res) => res.sendFile(__dirname + "/html/index.html"))
     server.get('/index', (req, res) => res.sendFile(__dirname + "/html/index.html"))
     server.get('/admin', (req, res) => res.sendFile(__dirname + "/html/admin.html"));
+    server.get('/login', (req, res) => res.sendFile(__dirname + "/html/login.html"))
     server.get('/bread', (req, res) => res.sendFile(__dirname + "/html/bread.html"));
     server.get('/essay', (req, res) => res.sendFile(__dirname + "/html/essay.html"));
     server.get('/snake', (req, res) => res.sendFile(__dirname + "/html/snake.html"));
@@ -55,16 +79,15 @@ function setUpRoutes(models){
               const images = await models.pictures.findAll({ attributes: ["source"], where: { postId: post.id }}).map(x => x.source);
               post.images = images;
             }
-            res.status(200).send({ success: true, data: posts });
+            res.status(200).send(posts);
             next();
         } catch (e) {
-            res.status(400).send({ success: false, error: e.message });
+            res.status(400).send(e.message);
         }
     })
     server.post('/posts', upload.array('images'), async (req, res, next) =>  {
         try {
             console.log(req.body);
-
             const type = req.body.type
             const newPost = await models.posts.create(req.body);
             req.files.forEach(async (file) => {
@@ -75,18 +98,27 @@ function setUpRoutes(models){
             res.redirect(`/${type}`);
             next();
         } catch (e) {
-            res.status(400).send({ success: false, error: e.message });
+            res.status(400).send(e.message);
         }
+    })
+    server.post('/login', async (req, res, next) => {
+        console.log(req.body);
+        const hash = crypto.createHash("sha512").update(req.body.password, "binary").digest("base64");
+        console.log(hash);
+        const user = await models.users.findOne({where: { username: req.body.username, password: hash }})
+        if(user){
+            const token = jwtFunctions.sign(user.username);
+            res.redirect('/admin');
+        } else {
+            res.redirect('/login');
+        }
+        next();
     })
 
 
     server.get('/favicon.ico', (req, res) => res.sendFile(__dirname + "/icon/favicon.ico"))
     server.get('/css/:id', (req, res) => {
         res.sendFile(__dirname + "/css/"+req.params.id);
-    });
-    server.get('/photo/:id', (req, res) => { 
-        // res.setHeater("Content-Type", "image")
-        res.sendFile(__dirname + "/photo/"+req.params.id);
     });
     server.get('/uploads/:id', (req, res) => { 
         res.sendFile(__dirname + "/uploads/"+req.params.id);

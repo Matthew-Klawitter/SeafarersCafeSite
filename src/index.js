@@ -2,8 +2,21 @@ const server = require('./server');
 const Sequelize = require('sequelize');
 const fs = require('fs');
 const path = require('path');
+const jwt = require('jsonwebtoken');
 
-const dbCreds = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json'))).database;
+const config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json')));
+
+const dbCreds = config.database;
+const secret = config.jwt_secret;
+
+const jwtFunctions = {
+  sign: function(message) {
+    return jwt.sign({ value: message }, secret);
+  },
+  verify: function(token) {
+    return jwt.verify(token, secret).value;
+  }
+}
 
 const database = new Sequelize(dbCreds.database, dbCreds.user, dbCreds.password, {
   logging(str) {
@@ -43,7 +56,16 @@ function setUpModels(){
             },}),
         "pictures": database.define('pictures', {
             source: { type: Sequelize.TEXT, allowNull: false},
-          })
+          }),
+        "users": database.define('user', {
+            username: {
+              type: Sequelize.STRING,
+              allowNull: false,
+            },
+            password: {
+              type: Sequelize.STRING,
+              allowNull: false,
+            },})
     }
     models.pictures.belongsTo(models.posts);
     return models;
@@ -52,6 +74,6 @@ function setUpModels(){
 const models = setUpModels();
 sync();
 
-server.setUpRoutes(models);
+server.setUpRoutes(models, jwtFunctions);
 server.listen();
 

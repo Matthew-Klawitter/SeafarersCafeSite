@@ -18,7 +18,7 @@
                 },
                 created() {
                     fetch(new Request('/posts/bread')).then(response => response.json())
-                        .then(response => this.posts = response.data);
+                        .then(response => this.posts = response);
                 }
             });
         }

@@ -19,7 +19,7 @@
                 },
                 created() {
                     fetch(new Request('/posts/index')).then(response => response.json())
-                        .then(response => this.posts = response.data);
+                        .then(response => this.posts = response);
                 }
             });
         }
