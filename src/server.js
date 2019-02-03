@@ -19,8 +19,6 @@ var storage = multer.diskStorage({
   })
 var upload = multer({ storage: storage })
 
-const port = 80;
-
 const server = express();
 // server.use(bodyParser.json());
 server.use(cookieParser())
@@ -31,7 +29,7 @@ server.use(function (req, res, next) {
     next()
 })
 
-function listen(){
+function listen(port){
     server.listen(port, () => console.info(`Listening on port ${port}!`));
 }
 

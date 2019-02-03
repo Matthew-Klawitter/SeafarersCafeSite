@@ -75,5 +75,5 @@ const models = setUpModels();
 sync();
 
 server.setUpRoutes(models, jwtFunctions);
-server.listen();
+server.listen(config.port);
 
