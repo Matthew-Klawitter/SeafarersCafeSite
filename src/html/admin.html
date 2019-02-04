@@ -7,6 +7,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <script>
+        window.onload = function () {
+            var feed = new Vue({
+                el: '#stats',
+                data: {
+                    stats: {ip: [], url: []},
+                    showIpTable: true,
+                    showUrlTable: true,
+                },
+                created() {
+                    fetch(new Request('/admin/stats')).then(response => response.json())
+                        .then(response => this.stats = response);
+                }
+            });
+        }
+    </script>
 </head>
 
 <body>
@@ -30,6 +48,29 @@
                 <input type="submit" value="Submit">
             </form>
         </div>
+    </div>
+    <div id="stats">
+        <h1>Stats</h1>
+        <div>
+            <input type="checkbox" id="showIp" v-model="showIpTable">
+            <label for="showIp">Show IP Stats</label>
+        </div>
+        <table class="table ip-table" v-if="showIpTable">
+            <tr><th>Host</th><th>Total Requests</th></tr>
+            <tr v-for="item in stats.ip">
+                <td>{{item.ip}}</td><td>{{item.c}}</td>
+            </tr>
+        </table>
+        <div>
+            <input type="checkbox" id="showUrl" v-model="showUrlTable">
+            <label for="showUrl">Show URL Stats</label>
+        </div>
+        <table class="table url-table" v-if="showUrlTable">
+            <tr><th>Method</th><th>Path</th><th>Total Requests</th></tr>
+            <tr v-for="item in stats.url">
+                <td>{{item.method}}</td><td>{{item.url}}</td><td>{{item.c}}</td>
+            </tr>
+        </table>
     </div>
 </body>
 

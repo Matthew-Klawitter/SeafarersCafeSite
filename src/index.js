@@ -65,7 +65,12 @@ function setUpModels(){
             password: {
               type: Sequelize.STRING,
               allowNull: false,
-            },})
+            },}),
+        "requests": database.define('requests', {
+            ip: Sequelize.STRING,
+            method: Sequelize.STRING,
+            url: Sequelize.STRING,
+        })
     }
     models.pictures.belongsTo(models.posts);
     return models;
@@ -74,6 +79,6 @@ function setUpModels(){
 const models = setUpModels();
 sync();
 
-server.setUpRoutes(models, jwtFunctions);
+server.setUpRoutes(models, jwtFunctions, database);
 server.listen(config.port);
 
