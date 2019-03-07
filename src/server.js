@@ -66,6 +66,8 @@ function setUpRoutes(models, jwtFunctions, database) {
     server.get('/admin', (req, res) => res.sendFile(__dirname + "/html/admin.html"));
     server.get('/login', (req, res) => res.sendFile(__dirname + "/html/login.html"))
     server.get('/bread', (req, res) => res.sendFile(__dirname + "/html/bread.html"));
+    server.get('/blog', (req, res) => res.sendFile(__dirname + "/html/blog.html"));
+    server.get('/feed', (req, res) => res.sendFile(__dirname + "/html/feed.html"));
     server.get('/essay', (req, res) => res.sendFile(__dirname + "/html/essay.html"));
     server.get('/snake', (req, res) => res.sendFile(__dirname + "/html/snake.html"));
     server.get('/setScore', (req, res) => {
@@ -82,6 +84,9 @@ function setUpRoutes(models, jwtFunctions, database) {
             res.status(400).send(e.message);
         }
     })
+    server.get('/blog/:id', async (req, res, next) => {
+
+    });
     server.get('/posts/:type', async (req, res, next) => {
         try {
             const { type } = req.params;
@@ -90,6 +95,9 @@ function setUpRoutes(models, jwtFunctions, database) {
             for (const post of posts) {
                 const images = await models.pictures.findAll({ attributes: ["source"], where: { postId: post.id } }).map(x => x.source);
                 post.images = images;
+                const tags = await models.tags.findAll({ attributes: ["text"], where: { postId: post.id } }).map(x => x.text);
+                console.log(tags);
+                post.tags= tags;
             }
             res.status(200).send(posts);
             next();
@@ -104,6 +112,9 @@ function setUpRoutes(models, jwtFunctions, database) {
             req.files.forEach(async (file) => {
                 await models.pictures.create({ "source": "uploads/" + file.filename, "postId": newPost.id });
                 console.log("uploaded ", file.path);
+            })
+            req.body.tags.split(" ").forEach(async (tag) => {
+                await models.tags.create({ "text": tag, "postId": newPost.id});
             })
             console.log(newPost);
             res.redirect(`/${type}`);
@@ -136,6 +147,9 @@ function setUpRoutes(models, jwtFunctions, database) {
     });
     server.get('/essay/:id', (req, res) => {
         res.sendFile(__dirname + "/html/essay/" + req.params.id);
+    });
+    server.get('/js/:id', (req, res) => {
+        res.sendFile(__dirname + "/js/" + req.params.id);
     });
 
 }

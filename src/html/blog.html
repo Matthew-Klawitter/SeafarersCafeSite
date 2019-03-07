@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Mark's Kitchen - Bread</title>
+    <title>Mark's Kitchen - Blog</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
@@ -11,13 +11,14 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
     <script>
         window.onload = loadFeed(function () {
+            console.log("callback!");
             var feed = new Vue({
                 el: '.feed',
                 data: {
                     posts: []
                 },
                 created() {
-                    fetch(new Request('/posts/bread')).then(response => response.json())
+                    fetch(new Request('/posts/blog')).then(response => response.json())
                         .then(response => this.posts = response);
                 }
             });
@@ -27,8 +28,7 @@
 
 <body>
     <div>
-        <h1>Bread</h1>
-        Some highlights (and lowlights) of breadmaking
+        <h1>Blog</h1>
         <div id="feed"></div>
     </div>
 </body>

@@ -5,7 +5,6 @@
     <title>Mark's Kitchen - Admin</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
@@ -36,12 +35,16 @@
                     <textarea rows="4" cols="50" name="description"></textarea> 
                 </div>
                 <div>
+                    <span>Tags: <input type="text" name="tags"/></span>
+                </div>
+                <div>
                     Images: <input type="file" name="images" multiple>
                 </div>
                 <div>
                     <select name="type">
                         <option value="" disabled selected>Select...</option>
                         <option value="bread">Bread</option>
+                        <option value="blog">Blog</option>
                         <option value="index">Index</option>
                     </select> 
                 </div>

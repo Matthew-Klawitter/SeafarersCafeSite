@@ -57,6 +57,9 @@ function setUpModels(){
         "pictures": database.define('pictures', {
             source: { type: Sequelize.TEXT, allowNull: false},
           }),
+        "tags": database.define('tags', {
+            text: { type: Sequelize.TEXT, allowNull: false},
+          }),
         "users": database.define('user', {
             username: {
               type: Sequelize.STRING,
@@ -73,6 +76,7 @@ function setUpModels(){
         })
     }
     models.pictures.belongsTo(models.posts);
+    models.tags.belongsTo(models.posts);
     return models;
 }
 
