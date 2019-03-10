@@ -4,6 +4,8 @@ const cookieParser = require('cookie-parser');
 const request = require('request');
 const crypto = require('crypto');
 
+const Op = require('sequelize').Op;
+
 const multer = require('multer');
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -22,6 +24,15 @@ var upload = multer({ storage: storage })
 const server = express();
 server.use(cookieParser())
 server.use(bodyParser.urlencoded({ extended: true }));
+
+async function addImagesAndTagsToPosts(models, posts){
+    for (const post of posts) {
+        const images = await models.pictures.findAll({ attributes: ["source"], where: { postId: post.id } }).map(x => x.source);
+        post.images = images;
+        const tags = await models.tags.findAll({ attributes: ["text"], where: { postId: post.id } }).map(x => x.text);
+        post.tags= tags;
+    }
+}
 
 function listen(port) {
     server.listen(port, () => console.info(`Listening on port ${port}!`));
@@ -67,6 +78,7 @@ function setUpRoutes(models, jwtFunctions, database) {
     server.get('/login', (req, res) => res.sendFile(__dirname + "/html/login.html"))
     server.get('/bread', (req, res) => res.sendFile(__dirname + "/html/bread.html"));
     server.get('/blog', (req, res) => res.sendFile(__dirname + "/html/blog.html"));
+    server.get('/tags', (req, res) => res.sendFile(__dirname + "/html/tags.html"));
     server.get('/feed', (req, res) => res.sendFile(__dirname + "/html/feed.html"));
     server.get('/essay', (req, res) => res.sendFile(__dirname + "/html/essay.html"));
     server.get('/snake', (req, res) => res.sendFile(__dirname + "/html/snake.html"));
@@ -85,20 +97,37 @@ function setUpRoutes(models, jwtFunctions, database) {
         }
     })
     server.get('/blog/:id', async (req, res, next) => {
-
-    });
+        // TODO add single page blog posts
+    })
+    server.get('/tags/:name', async (req, res, next) => {
+        console.log("TAGS/NAME");
+        try {
+            const { name } = req.params;
+            const postsWithTag = await models.tags.findAll({ attributes: ["postId"], where: { text: name } })
+                .map(function(x) {
+                    return {id: x.postId}
+                });
+            var posts = await models.posts.findAll({ 
+                where: { [Op.or]: postsWithTag }, order: [['createdAt', 'DESC']] 
+            });
+            posts = posts.map(x => x.get({ plain: true }));
+            await addImagesAndTagsToPosts(models, posts)
+            console.log(posts);
+            res.status(200).send(posts);
+            next();
+        } catch (e) {
+            console.error(e);
+            res.status(400).send(e.message);
+        }
+    })
     server.get('/posts/:type', async (req, res, next) => {
         try {
             const { type } = req.params;
-            var posts = await models.posts.findAll({ where: { type: type }, order: [['createdAt', 'DESC']] });
+            var posts = await models.posts.findAll({
+                where: { type: type }, order: [['createdAt', 'DESC']] 
+            });
             posts = posts.map(x => x.get({ plain: true }));
-            for (const post of posts) {
-                const images = await models.pictures.findAll({ attributes: ["source"], where: { postId: post.id } }).map(x => x.source);
-                post.images = images;
-                const tags = await models.tags.findAll({ attributes: ["text"], where: { postId: post.id } }).map(x => x.text);
-                console.log(tags);
-                post.tags= tags;
-            }
+            await addImagesAndTagsToPosts(models, posts)
             res.status(200).send(posts);
             next();
         } catch (e) {

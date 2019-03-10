@@ -3,7 +3,6 @@ function loadFeed(callback){
   fetch(myRequest).then(function(response) {
     return response.text();
   }).then(function(response) {
-    console.log(response);
     document.getElementById("feed").innerHTML = response;
     callback()
   });

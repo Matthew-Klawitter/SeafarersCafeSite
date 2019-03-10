@@ -6,7 +6,7 @@
     --btn-color: #2d2;
     --btn-text: #000;
     --btn-hover: #0a0;
-    --light-text: #aaa
+    --light-text: #aaa;
 }
   
 
@@ -44,13 +44,6 @@ footer {
     border: 1px solid #777; 
     background-color: #ddd;
     padding: 10px;
-}
-
-.item {
-    margin: 10px;
-    border: 2px solid #777;
-    border-radius: 5px;
-    padding: 7px;
 }
 
 img {
