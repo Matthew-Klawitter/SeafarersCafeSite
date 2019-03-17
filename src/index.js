@@ -70,7 +70,7 @@ function setUpModels(){
               allowNull: false,
             },}),
         "requests": database.define('requests', {
-            ip: Sequelize.STRING,
+            cookie: Sequelize.STRING,
             method: Sequelize.STRING,
             url: Sequelize.STRING,
         })

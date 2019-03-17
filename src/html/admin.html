@@ -13,8 +13,8 @@
             var feed = new Vue({
                 el: '#stats',
                 data: {
-                    stats: {ip: [], url: []},
-                    showIpTable: true,
+                    stats: {cookie: [], url: []},
+                    showSessionTable: true,
                     showUrlTable: true,
                 },
                 created() {
@@ -55,13 +55,13 @@
     <div id="stats">
         <h1>Stats</h1>
         <div>
-            <input type="checkbox" id="showIp" v-model="showIpTable">
-            <label for="showIp">Show IP Stats</label>
+            <input type="checkbox" id="showSession" v-model="showSessionTable">
+            <label for="showSession">Show Session Stats</label>
         </div>
-        <table class="table ip-table" v-if="showIpTable">
+        <table class="table session-table" v-if="showSessionTable">
             <tr><th>Host</th><th>Total Requests</th></tr>
-            <tr v-for="item in stats.ip">
-                <td>{{item.ip}}</td><td>{{item.c}}</td>
+            <tr v-for="item in stats.cookie">
+                <td>{{item.cookie.substring(0,10)}}...</td><td>{{item.c}}</td>
             </tr>
         </table>
         <div>

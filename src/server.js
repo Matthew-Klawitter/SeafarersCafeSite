@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const request = require('request');
 const crypto = require('crypto');
+const uuidv4 = require('uuid/v4');
 
 const Op = require('sequelize').Op;
 
@@ -68,7 +69,14 @@ function setUpRoutes(models, jwtFunctions, database) {
 
     // Route logging
     server.use(function (req, res, next) {
-        var request = models.requests.create({ createdAt: new Date(), ip: req.ip, method: req.method, url: req.originalUrl });
+        let cookie = req.cookies.authorization
+        if (!cookie) {
+            res.cookie('session-id', uuidv4(), { expires: new Date(Date.now() + (1000*60*60))});
+        }
+
+        models.requests.create({
+            createdAt: new Date(), cookie: cookie, method: req.method, url: req.originalUrl 
+        });
         next()
     })
 
@@ -88,9 +96,9 @@ function setUpRoutes(models, jwtFunctions, database) {
     })
     server.get('/admin/stats', async (req, res, next) => {
         try {
-            var ipResult = await database.query("SELECT ip, count(id) as c FROM requests GROUP BY ip", { type: database.QueryTypes.SELECT })
+            var sessionResult = await database.query("SELECT cookie, count(id) as c FROM requests GROUP BY cookie", { type: database.QueryTypes.SELECT })
             var urlResult = await database.query("SELECT method, url, count(id) as c FROM requests GROUP BY method, url", { type: database.QueryTypes.SELECT })
-            res.status(200).send({ ip: ipResult, url: urlResult });
+            res.status(200).send({ cookie: sessionResult, url: urlResult });
             next();
         } catch (e) {
             res.status(400).send(e.message);
@@ -157,7 +165,7 @@ function setUpRoutes(models, jwtFunctions, database) {
         const user = await models.users.findOne({ where: { username: req.body.username, password: hash } })
         if (user) {
             const token = jwtFunctions.sign(user.username);
-            res.cookie('authorization', token);
+            res.cookie('authorization', token, { expires: new Date(Date.now() + (1000*60*60))});
             console.debug("Redirecting to admin - logged in")
             res.redirect('/admin');
         } else {
