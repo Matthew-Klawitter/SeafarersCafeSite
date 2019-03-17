@@ -14,8 +14,9 @@
                 el: '#stats',
                 data: {
                     stats: {session: [], url: []},
-                    showSessionTable: true,
-                    showUrlTable: true,
+                    showSessionTable: false,
+                    showUrlTable: false,
+                    showLogData: false,
                 },
                 created() {
                     fetch(new Request('/admin/stats')).then(response => response.json())
@@ -71,6 +72,20 @@
         <table class="table url-table" v-if="showUrlTable">
             <tr><th>Method</th><th>Path</th><th>Total Requests</th></tr>
             <tr v-for="item in stats.url">
+                <td>{{item.method}}</td>
+                <td>{{item.url.substring(0, Math.min(30, item.url.length))}}</td>
+                <td>{{item.c}}</td>
+            </tr>
+        </table>
+        <div>
+            <input type="checkbox" id="showLog" v-model="showLogData">
+            <label for="showLog">Show Log</label>
+        </div>
+        <table class="table log-table" v-if="showLogData">
+            <tr><th>Date</th><th>Session</th><th>Method</th><th>Path</th></tr>
+            <tr v-for="item in stats.log">
+                <td>{{item.createdAt}}</td>
+                <td>{{item.session.substring(0,10)}}...</td>
                 <td>{{item.method}}</td>
                 <td>{{item.url.substring(0, Math.min(30, item.url.length))}}</td>
                 <td>{{item.c}}</td>

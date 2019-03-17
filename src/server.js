@@ -42,7 +42,7 @@ function listen(port) {
 function setUpRoutes(models, jwtFunctions, database) {
     // Authentication routine
     server.use(function (req, res, next) {
-        if (req.path.startsWith("/admin")) {
+        if (req.path.toLowerCase().startsWith("/admin")) {
             let cookie = req.cookies.authorization
             if (!cookie) {
                 console.debug("Redirecting to login - no cookie")
@@ -72,9 +72,8 @@ function setUpRoutes(models, jwtFunctions, database) {
         let cookie = req.cookies.session;
         if (!cookie) {
             cookie = uuidv4();
-            res.cookie('session', session, { expires: new Date(Date.now() + (1000 * 60 * 60)) });
+            res.cookie('session', cookie, { expires: new Date(Date.now() + (1000 * 60 * 60)) });
         }
-
         models.requests.create({
             createdAt: new Date(), session: cookie, method: req.method, url: req.originalUrl
         });
@@ -99,7 +98,8 @@ function setUpRoutes(models, jwtFunctions, database) {
         try {
             var sessionResult = await database.query("SELECT session, count(id) as c FROM requests GROUP BY session", { type: database.QueryTypes.SELECT })
             var urlResult = await database.query("SELECT method, url, count(id) as c FROM requests GROUP BY method, url", { type: database.QueryTypes.SELECT })
-            res.status(200).send({ session: sessionResult, url: urlResult });
+            var logResult = await database.query("SELECT createdAt, session, method, url FROM requests order by createdAt desc limit 15", { type: database.QueryTypes.SELECT })
+            res.status(200).send({ session: sessionResult, url: urlResult, log: logResult });
             next();
         } catch (e) {
             res.status(400).send(e.message);
