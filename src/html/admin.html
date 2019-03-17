@@ -13,7 +13,7 @@
             var feed = new Vue({
                 el: '#stats',
                 data: {
-                    stats: {cookie: [], url: []},
+                    stats: {session: [], url: []},
                     showSessionTable: true,
                     showUrlTable: true,
                 },
@@ -60,8 +60,8 @@
         </div>
         <table class="table session-table" v-if="showSessionTable">
             <tr><th>Host</th><th>Total Requests</th></tr>
-            <tr v-for="item in stats.cookie">
-                <td>{{item.cookie.substring(0,10)}}...</td><td>{{item.c}}</td>
+            <tr v-for="item in stats.session">
+                <td>{{item.session.substring(0,10)}}...</td><td>{{item.c}}</td>
             </tr>
         </table>
         <div>
@@ -71,7 +71,9 @@
         <table class="table url-table" v-if="showUrlTable">
             <tr><th>Method</th><th>Path</th><th>Total Requests</th></tr>
             <tr v-for="item in stats.url">
-                <td>{{item.method}}</td><td>{{item.url}}</td><td>{{item.c}}</td>
+                <td>{{item.method}}</td>
+                <td>{{item.url.substring(0, Math.min(30, item.url.length))}}</td>
+                <td>{{item.c}}</td>
             </tr>
         </table>
     </div>

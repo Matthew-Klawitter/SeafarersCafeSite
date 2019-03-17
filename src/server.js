@@ -26,12 +26,12 @@ const server = express();
 server.use(cookieParser())
 server.use(bodyParser.urlencoded({ extended: true }));
 
-async function addImagesAndTagsToPosts(models, posts){
+async function addImagesAndTagsToPosts(models, posts) {
     for (const post of posts) {
         const images = await models.pictures.findAll({ attributes: ["source"], where: { postId: post.id } }).map(x => x.source);
         post.images = images;
         const tags = await models.tags.findAll({ attributes: ["text"], where: { postId: post.id } }).map(x => x.text);
-        post.tags= tags;
+        post.tags = tags;
     }
 }
 
@@ -69,13 +69,14 @@ function setUpRoutes(models, jwtFunctions, database) {
 
     // Route logging
     server.use(function (req, res, next) {
-        let cookie = req.cookies.authorization
+        let cookie = req.cookies.session;
         if (!cookie) {
-            res.cookie('session-id', uuidv4(), { expires: new Date(Date.now() + (1000*60*60))});
+            cookie = uuidv4();
+            res.cookie('session', session, { expires: new Date(Date.now() + (1000 * 60 * 60)) });
         }
 
         models.requests.create({
-            createdAt: new Date(), cookie: cookie, method: req.method, url: req.originalUrl 
+            createdAt: new Date(), session: cookie, method: req.method, url: req.originalUrl
         });
         next()
     })
@@ -96,9 +97,9 @@ function setUpRoutes(models, jwtFunctions, database) {
     })
     server.get('/admin/stats', async (req, res, next) => {
         try {
-            var sessionResult = await database.query("SELECT cookie, count(id) as c FROM requests GROUP BY cookie", { type: database.QueryTypes.SELECT })
+            var sessionResult = await database.query("SELECT session, count(id) as c FROM requests GROUP BY session", { type: database.QueryTypes.SELECT })
             var urlResult = await database.query("SELECT method, url, count(id) as c FROM requests GROUP BY method, url", { type: database.QueryTypes.SELECT })
-            res.status(200).send({ cookie: sessionResult, url: urlResult });
+            res.status(200).send({ session: sessionResult, url: urlResult });
             next();
         } catch (e) {
             res.status(400).send(e.message);
@@ -112,11 +113,11 @@ function setUpRoutes(models, jwtFunctions, database) {
         try {
             const { name } = req.params;
             const postsWithTag = await models.tags.findAll({ attributes: ["postId"], where: { text: name } })
-                .map(function(x) {
-                    return {id: x.postId}
+                .map(function (x) {
+                    return { id: x.postId }
                 });
-            var posts = await models.posts.findAll({ 
-                where: { [Op.or]: postsWithTag }, order: [['createdAt', 'DESC']] 
+            var posts = await models.posts.findAll({
+                where: { [Op.or]: postsWithTag }, order: [['createdAt', 'DESC']]
             });
             posts = posts.map(x => x.get({ plain: true }));
             await addImagesAndTagsToPosts(models, posts)
@@ -132,7 +133,7 @@ function setUpRoutes(models, jwtFunctions, database) {
         try {
             const { type } = req.params;
             var posts = await models.posts.findAll({
-                where: { type: type }, order: [['createdAt', 'DESC']] 
+                where: { type: type }, order: [['createdAt', 'DESC']]
             });
             posts = posts.map(x => x.get({ plain: true }));
             await addImagesAndTagsToPosts(models, posts)
@@ -151,7 +152,7 @@ function setUpRoutes(models, jwtFunctions, database) {
                 console.log("uploaded ", file.path);
             })
             req.body.tags.split(" ").forEach(async (tag) => {
-                await models.tags.create({ "text": tag, "postId": newPost.id});
+                await models.tags.create({ "text": tag, "postId": newPost.id });
             })
             console.log(newPost);
             res.redirect(`/${type}`);
@@ -165,7 +166,7 @@ function setUpRoutes(models, jwtFunctions, database) {
         const user = await models.users.findOne({ where: { username: req.body.username, password: hash } })
         if (user) {
             const token = jwtFunctions.sign(user.username);
-            res.cookie('authorization', token, { expires: new Date(Date.now() + (1000*60*60))});
+            res.cookie('authorization', token, { expires: new Date(Date.now() + (1000 * 60 * 60)) });
             console.debug("Redirecting to admin - logged in")
             res.redirect('/admin');
         } else {
