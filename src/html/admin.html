@@ -33,7 +33,7 @@
         <div class="form">
             <form action="/posts" method="post" enctype="multipart/form-data">
                 <div>
-                    <textarea rows="4" cols="50" name="description"></textarea> 
+                    <textarea name="description"></textarea> 
                 </div>
                 <div>
                     <span>Tags: <input type="text" name="tags"/></span>
@@ -84,7 +84,7 @@
         <table class="table log-table" v-if="showLogData">
             <tr><th>Date</th><th>Session</th><th>Method</th><th>Path</th></tr>
             <tr v-for="item in stats.log">
-                <td>{{item.createdAt}}</td>
+                <td>{{item.createdAt.substring(0,19)}}</td>
                 <td>{{item.session.substring(0,10)}}...</td>
                 <td>{{item.method}}</td>
                 <td>{{item.url.substring(0, Math.min(30, item.url.length))}}</td>
