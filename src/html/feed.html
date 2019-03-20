@@ -1,6 +1,6 @@
 <div class="feed">
     <div class="card" v-for="post in posts">
-        <p class="card-text">{{ post.description }}</p>
+        <p class="card-text" v-html="post.description"></p>
         <div class="card-img">
             <span v-for="image in post.images">
                 <a v-bind:href="image"><img v-bind:src="image"></a>
