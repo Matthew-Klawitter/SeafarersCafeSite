@@ -96,10 +96,11 @@ function setUpRoutes(models, jwtFunctions, database) {
     })
     server.get('/admin/stats', async (req, res, next) => {
         try {
-            var sessionResult = await database.query("SELECT session, count(id) as c FROM requests GROUP BY session", { type: database.QueryTypes.SELECT })
+            var sessionResult = await database.query("SELECT session, count(id) as c FROM requests GROUP BY session HAVING c > 1", { type: database.QueryTypes.SELECT })
+            var total = await database.query("select count(distinct session) as t FROM requests", { type: database.QueryTypes.SELECT })
             var urlResult = await database.query("SELECT method, url, count(id) as c FROM requests GROUP BY method, url", { type: database.QueryTypes.SELECT })
             var logResult = await database.query("SELECT createdAt, session, method, url FROM requests order by createdAt desc limit 15", { type: database.QueryTypes.SELECT })
-            res.status(200).send({ session: sessionResult, url: urlResult, log: logResult });
+            res.status(200).send({ total: total[0].t, session: sessionResult, url: urlResult, log: logResult });
             next();
         } catch (e) {
             res.status(400).send(e.message);
