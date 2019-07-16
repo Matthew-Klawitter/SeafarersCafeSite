@@ -73,6 +73,10 @@ function setUpModels(){
             session: Sequelize.STRING,
             method: Sequelize.STRING,
             url: Sequelize.STRING,
+        }),
+        "emails": database.define('email', {
+          address: Sequelize.STRING,
+          name: Sequelize.STRING
         })
     }
     models.pictures.belongsTo(models.posts);

@@ -84,6 +84,7 @@ function setUpRoutes(models, jwtFunctions, database) {
     server.get('/index', (req, res) => res.sendFile(__dirname + "/html/index.html"))
     server.get('/admin', (req, res) => res.sendFile(__dirname + "/html/admin.html"));
     server.get('/login', (req, res) => res.sendFile(__dirname + "/html/login.html"))
+    server.get('/email', (req, res) => res.sendFile(__dirname + "/html/email.html"))
     server.get('/bread', (req, res) => res.sendFile(__dirname + "/html/bread.html"));
     server.get('/blog', (req, res) => res.sendFile(__dirname + "/html/blog.html"));
     server.get('/tags', (req, res) => res.sendFile(__dirname + "/html/tags.html"));
@@ -173,6 +174,16 @@ function setUpRoutes(models, jwtFunctions, database) {
         } else {
             console.debug("Redirecting to login - invalid login")
             res.redirect('/login');
+        }
+    })
+    server.post('/email', async (req, res, next) => {
+        const name = req.body.name;
+        const email = req.body.email;
+        if (name && email) {
+            models.emails.create({"name": name, "address": email})
+            res.redirect('/email#success');
+        } else {
+            console.debug("Error with email submission")
         }
     })
 

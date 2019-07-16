@@ -103,7 +103,7 @@ p {
     .card img {
         width: 400px;
     }
-    form input[type=text], input[type=password] {
+    form input[type=text], input[type=password], input[type=email] {
         max-width: 600px;
     }
     form textarea {
@@ -176,7 +176,7 @@ form {
     width: 85%;
 }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=email] {
     height:1.5em;
     width: 100%;
     display: block;
