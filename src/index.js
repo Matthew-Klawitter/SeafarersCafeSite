@@ -68,6 +68,10 @@ function setUpModels(){
             password: {
               type: Sequelize.STRING,
               allowNull: false,
+            },
+            salt: {
+              type: Sequelize.STRING,
+              allowNull: false,
             },}),
         "requests": database.define('requests', {
             session: Sequelize.STRING,

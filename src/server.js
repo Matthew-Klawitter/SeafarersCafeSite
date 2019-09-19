@@ -39,6 +39,12 @@ function listen(port) {
     server.listen(port, () => console.info(`Listening on port ${port}!`));
 }
 
+function hashWithSalt(password, salt){
+    var hash = crypto.createHmac('sha512', salt);
+    hash.update(password);
+    return hash.digest("base64");
+};
+
 function setUpRoutes(models, jwtFunctions, database) {
     // Authentication routine
     server.use(function (req, res, next) {
@@ -164,9 +170,9 @@ function setUpRoutes(models, jwtFunctions, database) {
         }
     })
     server.post('/login', async (req, res, next) => {
-        const hash = crypto.createHash("sha512").update(req.body.password, "binary").digest("base64");
-        const user = await models.users.findOne({ where: { username: req.body.username, password: hash } })
-        if (user) {
+        const user = await models.users.findOne({ where: { username: req.body.username} })
+        const hash = hashWithSalt(req.body.password, user.salt)
+        if (user.password == hash) {
             const token = jwtFunctions.sign(user.username);
             res.cookie('authorization', token, { expires: new Date(Date.now() + (1000 * 60 * 60)) });
             console.debug("Redirecting to admin - logged in")
