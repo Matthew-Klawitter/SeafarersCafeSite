@@ -17,10 +17,13 @@
                     posts: []
                 },
                 created() {
+                    var id = parseInt(window.location.pathname.split("/")[2]);
                     fetch(new Request('/posts/blog')).then(response => response.json())
                         .then(response => { response.forEach(post => {
-                                post.description = marked(post.description)
-                                this.posts.push(post);
+                                if(post.id == id){
+                                    post.description = marked(post.description)
+                                    this.posts.push(post);
+                                }
                             });
                         });
                 }
@@ -33,6 +36,7 @@
     <div>
         <h1>
             <a class="navigation" href="/" title="marks.kitchen">&lt;</a>
+            <a class="navigation" href="/blog" title="marks.kitchen/blog">&lt;</a>
             Blog
         </h1>
         <div id="feed" class="feed">

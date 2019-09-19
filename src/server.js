@@ -108,7 +108,7 @@ function setUpRoutes(models, jwtFunctions, database) {
         }
     })
     server.get('/blog/:id', async (req, res, next) => {
-        // TODO add single page blog posts
+        res.sendFile(__dirname + "/html/blog-single.html");
     })
     server.get('/tags/:name', async (req, res, next) => {
         console.log("TAGS/NAME");
