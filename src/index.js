@@ -81,6 +81,11 @@ function setUpModels(){
         "emails": database.define('email', {
           address: Sequelize.STRING,
           name: Sequelize.STRING
+        }),
+        "wordsquares": database.define('wordsquare', {
+          words: Sequelize.STRING,
+          name: Sequelize.STRING,
+          best: Sequelize.BOOLEAN
         })
     }
     models.pictures.belongsTo(models.posts);
