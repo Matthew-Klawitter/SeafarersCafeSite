@@ -5,10 +5,9 @@ const request = require('request');
 const crypto = require('crypto');
 const uuidv4 = require('uuid/v4');
 const path = require('path');
-
 const Op = require('sequelize').Op;
-
 const multer = require('multer');
+
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, __dirname+'/uploads/')
@@ -87,26 +86,17 @@ function setUpRoutes(models, jwtFunctions, database) {
         next()
     })
 
+    // Page Routes
     server.get('/', (req, res) => res.sendFile(__dirname + "/html/index.html"))
     server.get('/index', (req, res) => res.sendFile(__dirname + "/html/index.html"))
     server.get('/admin', (req, res) => res.sendFile(__dirname + "/html/admin.html"));
     server.get('/login', (req, res) => res.sendFile(__dirname + "/html/login.html"))
     server.get('/email', (req, res) => res.sendFile(__dirname + "/html/email.html"))
-    server.get('/bread', (req, res) => res.sendFile(__dirname + "/html/bread.html"));
     server.get('/blog', (req, res) => res.sendFile(__dirname + "/html/blog.html"));
     server.get('/tags', (req, res) => res.sendFile(__dirname + "/html/tags.html"));
     server.get('/feed', (req, res) => res.sendFile(__dirname + "/html/feed.html"));
-    server.get('/essay', (req, res) => res.sendFile(__dirname + "/html/essay.html"));
-    server.get('/snake', (req, res) => res.sendFile(__dirname + "/html/snake.html"));
-    server.get('/word-square', (req, res) => res.sendFile(__dirname + "/html/word-square.html"));
-    server.get('/wordsquares/best', async (req, res, next) => {
-        var best = await database.query("select words, name from wordsquares where best = 1", { type: database.QueryTypes.SELECT })
-        res.status(200).send({ best: best });
-    })
-    server.get('/setScore', (req, res) => {
-        request(`http://localhost:8000?${req.url.split("?")[1]}`, function (error, response, body) {
-        });
-    })
+    
+    // Date Routes
     server.get('/admin/stats', async (req, res, next) => {
         try {
             var sessionResult = await database.query("SELECT session, count(id) as c FROM requests GROUP BY session HAVING c > 1", { type: database.QueryTypes.SELECT })
@@ -198,18 +188,8 @@ function setUpRoutes(models, jwtFunctions, database) {
             console.debug("Error with email submission")
         }
     })
-    server.post('/wordsquares', async (req, res, next) => {
-        const words = req.body.words;
-        const name = req.body.name;
-        if (name && words) {
-            models.wordsquares.create({"name": name, "words": words, "best": false})
-            res.redirect('/wordsquare#success');
-        } else {
-            console.debug("Error with wordsquare submission")
-        }
-    })
 
-
+    // Static files
     server.get('/favicon.ico', (req, res) => res.sendFile(__dirname + "/icon/favicon.ico"))
     server.get('/css/:id', (req, res) => {
         res.sendFile(__dirname + "/css/" + req.params.id);
