@@ -95,7 +95,10 @@ function setUpRoutes(models, jwtFunctions, database) {
     server.get('/blog', (req, res) => res.sendFile(__dirname + "/html/blog.html"));
     server.get('/tags', (req, res) => res.sendFile(__dirname + "/html/tags.html"));
     server.get('/feed', (req, res) => res.sendFile(__dirname + "/html/feed.html"));
-    
+    server.get('/podcast', (req, res) => res.sendFile(__dirname + "/html/podcast.html"));
+    server.get('/media', (req, res) => res.sendFile(__dirname + "/html/media.html"));
+    server.get('/faq', (req, res) => res.sendFile(__dirname + "/html/faq.html"));
+
     // Date Routes
     server.get('/admin/stats', async (req, res, next) => {
         try {
@@ -189,21 +192,12 @@ function setUpRoutes(models, jwtFunctions, database) {
         }
     })
 
-    // Static files
-    server.get('/favicon.ico', (req, res) => res.sendFile(__dirname + "/icon/favicon.ico"))
-    server.get('/css/:id', (req, res) => {
-        res.sendFile(__dirname + "/css/" + req.params.id);
-    });
+    /* Static files (css, favicon, etc.) */
+    server.use(express.static(__dirname + '/public'));
+
     server.get('/uploads/:id', (req, res) => {
         res.sendFile(__dirname + "/uploads/" + req.params.id);
     });
-    server.get('/essay/:id', (req, res) => {
-        res.sendFile(__dirname + "/html/essay/" + req.params.id);
-    });
-    server.get('/js/:id', (req, res) => {
-        res.sendFile(__dirname + "/js/" + req.params.id);
-    });
-
 }
 
 module.exports = {
