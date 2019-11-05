@@ -35,6 +35,8 @@ footer {
     border-top: 1px solid var(--light-text);
     color: var(--light-text);
     background-color: var(--background-accent);
+    position: absolute;
+    bottom: 0;
 }
 
 .essay{
