@@ -1,11 +1,11 @@
 :root {
-    --background: #fff;
-    --background-accent: #f0f0f0;
-    --accent: #ada;
+    --background: #8cc8dc;
+    --background-accent: #a4ccda;
+    --accent: #8cdca0;
     --text: #000;
-    --btn-color: #2d2;
+    --btn-color: #968cdc;
     --btn-text: #000;
-    --btn-hover: #0a0;
+    --btn-hover: rgb(102, 85, 214);
     --light-text: #aaa;
 }
   
