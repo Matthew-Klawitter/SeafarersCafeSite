@@ -1,7 +1,7 @@
 :root {
     --background: #8cc8dc;
     --background-accent: #30819c;
-    --accent: #8cdca0;
+    --accent: #000;
     --text: #000;
     --btn-color: #dca58c;
     --btn-text: #000;
@@ -209,4 +209,22 @@ textarea {
 a.navigation:visited, a.navigation:link {
     color: var(--accent);
     text-decoration: none;
+}
+
+/* faq.html styles */
+.faq-question {
+    margin: 1em;
+    border: 1px solid var(--text);
+    border-radius: 2px;
+    display: inline;
+    min-width: 200px;
+    background-color: var(--background-accent);
+}
+.faq-answer {
+    margin: 1em;
+    border: 1px solid var(--text);
+    border-radius: 1px;
+    display: inline;
+    min-width: 200px;
+    background-color: var(--background-accent);
 }
