@@ -95,7 +95,6 @@ p {
 
 @media screen and (min-width: 900px) {
     body {
-        width: 80%;
         margin: auto;
     }
     .card-img {
