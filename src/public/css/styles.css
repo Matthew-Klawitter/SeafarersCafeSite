@@ -1,3 +1,4 @@
+/* We may need to reorganize this a bit at some point */
 :root {
     --background: #8cc8dc;
     --background-accent: #30819c;
@@ -227,4 +228,62 @@ a.navigation:visited, a.navigation:link {
     display: inline;
     min-width: 200px;
     background-color: var(--background-accent);
+}
+
+ /* Style the tab */
+ .tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+  
+/* Style the buttons that are used to open the tab content */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+  
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+  
+/* Color/indent the current active tab */
+.tab button.active {
+    background-color: #ccc;
+}
+  
+/* Neatly style the tabs */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+} 
+
+/* Show preview to the right of the editor */
+#articlePreview {
+    border: 1px;
+    float: right;
+}
+
+/* Article editor organized to left and right */
+.float-container {
+    width: 80%;
+    margin: auto;
+    padding: 10px;
+}
+
+.float-one {
+    width: 50%;
+    float: left;
+}
+.float-two {
+    border: 1px solid black;
+    margin-left: 50%;
 }

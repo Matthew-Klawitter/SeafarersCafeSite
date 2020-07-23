@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.rawgit.com/showdownjs/showdown/1.0.1/dist/showdown.min.js"></script>
     <script>
         window.onload = function () {
             var feed = new Vue({
@@ -31,32 +32,43 @@
         <a class="navigation" href="/" title="seafarers.cafe">&lt;</a>
         Admin
     </h1>
-    <div>
-        <h1>Create Post</h1>
-        <div class="form">
-            <form action="/posts" method="post" enctype="multipart/form-data">
-                <div>
-                    <textarea name="description"></textarea>
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'createArticle')">Articles</button>
+        <button class="tablinks" onclick="openTab(event, 'stats')">Stats</button>
+    </div>
+
+    <div id="createArticle" class="tabcontent">
+        <h1>Create Article</h1>
+        <div class="container">
+            <div class="float-one">
+                <div class="form">
+                    <form action="/posts" method="post" enctype="multipart/form-data">
+                        <div>
+                            <textarea id="articleEditor" name="description" rows="10" cols="100" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <span>Tags: <input type="text" name="tags" /></span>
+                        </div>
+                        <div>
+                            Images: <input type="file" name="images" multiple>
+                        </div>
+                        <div>
+                            <select name="type">
+                                <option value="" disabled selected>Select...</option>
+                                <option value="blog">Blog</option>
+                                <option value="index">Index</option>
+                            </select>
+                        </div>
+                        <input type="submit" value="Submit">
+                    </form>
                 </div>
-                <div>
-                    <span>Tags: <input type="text" name="tags" /></span>
-                </div>
-                <div>
-                    Images: <input type="file" name="images" multiple>
-                </div>
-                <div>
-                    <select name="type">
-                        <option value="" disabled selected>Select...</option>
-                        <option value="bread">Bread</option>
-                        <option value="blog">Blog</option>
-                        <option value="index">Index</option>
-                    </select>
-                </div>
-                <input type="submit" value="Submit">
-            </form>
+            </div>
+            <div class="float-two">
+                <div id="articlePreview"></div>
+            </div>
         </div>
     </div>
-    <div id="stats">
+    <div id="stats" class="tabcontent">
         <h1>Stats</h1>
         <div>
             <input type="checkbox" id="showSession" v-model="showSessionTable">
@@ -112,5 +124,35 @@
         </table>
     </div>
 </body>
+<script>
+    function openTab(evt, contentID){
+        // Declare all variables
+        var i, tabcontent, tablinks;
 
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(contentID).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    function updatePreview(){
+        var text = document.getElementById('articleEditor').value,
+        target = document.getElementById('articlePreview'),
+        converter = new showdown.Converter(),
+        html = converter.makeHtml(text);
+        
+        target.innerHTML = html;
+    }
+</script>
 </html>
