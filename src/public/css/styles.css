@@ -150,6 +150,7 @@ p {
 }
 
 .btn-primary {
+    display: inline-block;
     /* height: 2em; */
     font-size: 20px;
     background-color: var(--btn-color);
