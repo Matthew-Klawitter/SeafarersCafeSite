@@ -95,9 +95,7 @@ function setUpRoutes(models, jwtFunctions, database) {
     server.get('/blog', (req, res) => res.sendFile(__dirname + "/html/blog.html"));
     server.get('/tags', (req, res) => res.sendFile(__dirname + "/html/tags.html"));
     server.get('/feed', (req, res) => res.sendFile(__dirname + "/html/feed.html"));
-    server.get('/podcast', (req, res) => res.sendFile(__dirname + "/html/podcast.html"));
-    server.get('/media', (req, res) => res.sendFile(__dirname + "/html/media.html"));
-    server.get('/faq', (req, res) => res.sendFile(__dirname + "/html/faq.html"));
+    server.get('/aboutus', (req, res) => res.sendFile(__dirname + "/html/aboutus.html"));
 
     // Date Routes
     server.get('/admin/stats', async (req, res, next) => {
