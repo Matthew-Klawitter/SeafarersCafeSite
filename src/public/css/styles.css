@@ -1,6 +1,6 @@
 /* We may need to reorganize this a bit at some point */
 :root {
-    --background: #aaaaaa;
+    --background: #EEE;
     --background-accent: #30819c;
     --accent: #000;
     --text: #000;
@@ -127,6 +127,7 @@ p {
     margin: auto;
     max-width: 10%;
     min-width: 100px;
+    float: right;
 }
 
 .btn {
@@ -144,7 +145,7 @@ p {
 }
 
 .btn-primary {
-    height: 2em;
+    /* height: 2em; */
     font-size: 20px;
     background-color: var(--btn-color);
     color: var(--btn-text);
