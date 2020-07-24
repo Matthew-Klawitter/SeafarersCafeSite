@@ -125,7 +125,7 @@ p {
 }
 
 .titlebar h1 {
-    width: 50%;
+    display: inline-block;
 }
 
 .titlebar a{
