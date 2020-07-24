@@ -116,11 +116,16 @@ p {
     }
 }
 
+/** Titlebar Styles**/
 .titlebar {
     padding: 5px;
     border-top: 1px solid var(--light-text);
     border-bottom: 1px solid var(--light-text);
     background-color: var(--background-accent);
+}
+
+.titlebar h1 {
+    width: 50%;
 }
 
 .titlebar a{
