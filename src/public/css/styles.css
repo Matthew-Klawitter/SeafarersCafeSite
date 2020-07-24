@@ -136,7 +136,7 @@ nav {
     margin: auto;
     max-width: 10%;
     min-width: 100px;
-    float: right;
+    float: left;
 }
 
 .btn {
