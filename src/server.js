@@ -30,6 +30,7 @@ async function addImagesAndTagsToPosts(models, posts) {
     for (const post of posts) {
         const images = await models.pictures.findAll({ attributes: ["source"], where: { postId: post.id } }).map(x => x.source);
         post.images = images;
+        // TODO: bugging out here for some reason... perhaps null for photos or the path doesn't exist?
         const tags = await models.tags.findAll({ attributes: ["text"], where: { postId: post.id } }).map(x => x.text);
         post.tags = tags;
     }
