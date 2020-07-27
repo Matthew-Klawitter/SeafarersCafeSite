@@ -283,7 +283,6 @@ a.navigation:visited, a.navigation:link {
 
 /* Show preview to the right of the editor */
 #articlePreview {
-    border: 1px solid black;
     float: right;
     background-color: white;
     word-wrap: break-word;
@@ -293,7 +292,6 @@ a.navigation:visited, a.navigation:link {
 
 /* Article editor organized to left and right */
 .container {
-
     width: 80%;
     margin: auto;
     padding: 10px;
