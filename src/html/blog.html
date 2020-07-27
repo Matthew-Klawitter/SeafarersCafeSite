@@ -36,6 +36,8 @@
         </h1>
         <div id="feed" class="feed">
             <div class="card" v-for="post in posts">
+                <p class="card-title" v-html="post.title"></p>
+                <p class="card-author" v-html="post.author"></p>
                 <p class="card-text" v-html="post.description"></p>
                 <div class="card-img">
                     <span v-for="image in post.images">
