@@ -159,16 +159,12 @@
     }
 
     function updatePreview(){
-        var text = document.getElementById('articleEditor').value,
-        target = document.getElementById('articlePreview'),
-        converter = new showdown.Converter(),
+        var text = document.getElementById('articleEditor').value
+        target = document.getElementById('articlePreview')
+        converter = new showdown.Converter()
         html = converter.makeHtml(text);
-        
+        target.style.border = "1px solid black";
         target.innerHTML = html;
-    }
-
-    function validateCreateArticle(){
-
     }
 </script>
 </html>
