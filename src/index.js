@@ -46,6 +46,14 @@ async function sync(alter, force, callback) {
 function setUpModels(){
     const models = {
         "posts": database.define('posts', {
+            title: {
+              type: Sequelize.TEXT,
+              allowNull: false,
+            },
+            author: {
+              type: Sequelize.TEXT,
+              allowNull: false,
+            },
             description: {
               type: Sequelize.TEXT,
               allowNull: false,
@@ -53,7 +61,11 @@ function setUpModels(){
             type: {
               type: Sequelize.STRING,
               allowNull: false,
-            },}),
+            },
+            published: {
+              type: Sequelize.BOOLEAN,
+              allowNull: false,
+            }}),
         "pictures": database.define('pictures', {
             source: { type: Sequelize.TEXT, allowNull: false},
           }),
@@ -81,11 +93,6 @@ function setUpModels(){
         "emails": database.define('email', {
           address: Sequelize.STRING,
           name: Sequelize.STRING
-        }),
-        "wordsquares": database.define('wordsquare', {
-          words: Sequelize.STRING,
-          name: Sequelize.STRING,
-          best: Sequelize.BOOLEAN
         })
     }
     models.pictures.belongsTo(models.posts);
