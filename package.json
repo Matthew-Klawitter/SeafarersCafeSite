@@ -1,11 +1,12 @@
 {
-  "name": "markskitchen",
+  "name": "seafarerscafesite",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run": "sudo nodejs src/"
+    "run": "nodejs src/"
   },
   "author": "",
   "license": "ISC",
