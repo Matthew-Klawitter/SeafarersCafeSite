@@ -44,19 +44,34 @@
                 <div class="form">
                     <form action="/posts" method="post" enctype="multipart/form-data">
                         <div>
-                            <textarea id="articleEditor" name="description" rows="10" cols="100" oninput="updatePreview()"></textarea>
+                            <span>Title: <input type="text" name="title" required/></span>
                         </div>
                         <div>
-                            <span>Tags: <input type="text" name="tags" /></span>
+                            <span>Author: <input type="text" name="author" required/></span>
+                        </div>
+                        <div>
+                            <textarea id="articleEditor" name="description" rows="10" cols="100" oninput="updatePreview()" required></textarea>
+                        </div>
+                        <div>
+                            <span>Tags: <input type="text" name="tags" required/></span>
                         </div>
                         <div>
                             Images: <input type="file" name="images" multiple>
                         </div>
                         <div>
-                            <select name="type">
+                            What type of media is this article?
+                            <select name="type" required>
                                 <option value="" disabled selected>Select...</option>
                                 <option value="blog">Blog</option>
                                 <option value="index">Index</option>
+                            </select>
+                        </div>
+                        <div>
+                            Publish the article publically after submission?
+                            <select name="published" required>
+                                <option value="" disabled selected>Select...</option>
+                                <option value=1>Yes</option>
+                                <option value=0>No</option>
                             </select>
                         </div>
                         <input type="submit" value="Submit">
@@ -68,6 +83,7 @@
             </div>
         </div>
     </div>
+
     <div id="stats" class="tabcontent">
         <h1>Stats</h1>
         <div>
@@ -126,22 +142,18 @@
 </body>
 <script>
     function openTab(evt, contentID){
-        // Declare all variables
         var i, tabcontent, tablinks;
 
-        // Get all elements with class="tabcontent" and hide them
         tabcontent = document.getElementsByClassName("tabcontent");
         for (i = 0; i < tabcontent.length; i++) {
             tabcontent[i].style.display = "none";
         }
 
-        // Get all elements with class="tablinks" and remove the class "active"
         tablinks = document.getElementsByClassName("tablinks");
         for (i = 0; i < tablinks.length; i++) {
             tablinks[i].className = tablinks[i].className.replace(" active", "");
         }
 
-        // Show the current tab, and add an "active" class to the button that opened the tab
         document.getElementById(contentID).style.display = "block";
         evt.currentTarget.className += " active";
     }
@@ -153,6 +165,10 @@
         html = converter.makeHtml(text);
         
         target.innerHTML = html;
+    }
+
+    function validateCreateArticle(){
+
     }
 </script>
 </html>

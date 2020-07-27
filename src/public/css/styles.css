@@ -244,8 +244,9 @@ a.navigation:visited, a.navigation:link {
     background-color: var(--background);
 }
 
- /* Style the tab */
- .tab {
+/* Admin page styles */
+/* Style the tab */
+.tab {
     overflow: hidden;
     border: 1px solid #ccc;
     background-color: #f1f1f1;
@@ -282,12 +283,17 @@ a.navigation:visited, a.navigation:link {
 
 /* Show preview to the right of the editor */
 #articlePreview {
-    border: 1px;
+    border: 1px solid black;
     float: right;
+    background-color: white;
+    word-wrap: break-word;
+    width: 100%;
+    max-width: 100%;
 }
 
 /* Article editor organized to left and right */
 .container {
+
     width: 80%;
     margin: auto;
     padding: 10px;
@@ -298,6 +304,5 @@ a.navigation:visited, a.navigation:link {
     float: left;
 }
 .float-two {
-    border: 1px solid black;
     margin-left: 50%;
 }
