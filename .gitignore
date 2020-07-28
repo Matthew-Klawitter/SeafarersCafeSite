@@ -62,4 +62,4 @@ typings/
 
 config.json
 uploads/
-
+.vscode/launch.json
