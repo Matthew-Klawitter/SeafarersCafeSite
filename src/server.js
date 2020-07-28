@@ -26,12 +26,10 @@ const server = express();
 server.use(cookieParser())
 server.use(bodyParser.urlencoded({ extended: true }));
 
-async function addImagesAndTagsToPosts(models, posts) {
+async function addTagsToPosts(models, posts) {
     for (const post of posts) {
-        const images = await models.pictures.findAll({ attributes: ["source"], where: { postId: post.id } }).map(x => x.source);
-        post.images = images;
-        // TODO: bugging out here for some reason... perhaps null for photos or the path doesn't exist?
-        const tags = await models.tags.findAll({ attributes: ["text"], where: { postId: post.id } }).map(x => x.text);
+        var tags = await models.tags.findAll({ attributes: ["text"], where: { postId: post.id } });
+        tags = tags.map(x => x.text);
         post.tags = tags;
     }
 }
@@ -118,15 +116,15 @@ function setUpRoutes(models, jwtFunctions, database) {
         console.log("TAGS/NAME");
         try {
             const { name } = req.params;
-            const postsWithTag = await models.tags.findAll({ attributes: ["postId"], where: { text: name } })
-                .map(function (x) {
-                    return { id: x.postId }
-                });
+            var postsWithTag = await models.tags.findAll({ attributes: ["postId"], where: { text: name } })
+            postsWithTag = postsWithTag.map(function (x) {
+                return { id: x.postId }
+            });
             var posts = await models.posts.findAll({
-                where: { [Op.or]: postsWithTag }, order: [['createdAt', 'DESC']]
+                where: {[Op.or]: postsWithTag}, order: [['createdAt', 'DESC']]
             });
             posts = posts.map(x => x.get({ plain: true }));
-            await addImagesAndTagsToPosts(models, posts)
+            await addTagsToPosts(models, posts)
             console.log(posts);
             res.status(200).send(posts);
             next();
@@ -142,21 +140,17 @@ function setUpRoutes(models, jwtFunctions, database) {
                 where: { type: type }, order: [['createdAt', 'DESC']]
             });
             posts = posts.map(x => x.get({ plain: true }));
-            await addImagesAndTagsToPosts(models, posts)
+            await addTagsToPosts(models, posts)
             res.status(200).send(posts);
             next();
         } catch (e) {
             res.status(400).send(e.message);
         }
     })
-    server.post('/posts', upload.array('images'), async (req, res, next) => {
+    server.post('/posts', async (req, res, next) => {
         try {
             const type = req.body.type
             const newPost = await models.posts.create(req.body);
-            req.files.forEach(async (file) => {	
-                await models.pictures.create({ "source": "uploads/" + file.filename, "postId": newPost.id });
-                console.log("uploaded ", file.path);
-            })
             req.body.tags.split(" ").forEach(async (tag) => {
                 await models.tags.create({ "text": tag, "postId": newPost.id });
             })
