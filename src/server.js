@@ -133,7 +133,7 @@ function setUpRoutes(models, jwtFunctions, database) {
             res.status(400).send(e.message);
         }
     })
-    server.get('/posts/:type', async (req, res, next) => {
+    server.get('/admin/posts/:type', async (req, res, next) => {
         try {
             const { type } = req.params;
             var posts = await models.posts.findAll({
@@ -147,7 +147,7 @@ function setUpRoutes(models, jwtFunctions, database) {
             res.status(400).send(e.message);
         }
     })
-    server.post('/posts', async (req, res, next) => {
+    server.post('/admin/posts', async (req, res, next) => {
         try {
             const type = req.body.type
             const newPost = await models.posts.create(req.body);
