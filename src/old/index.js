@@ -1,3 +1,4 @@
+import "reflect-metadata";
 const server = require('./server');
 const Sequelize = require('sequelize');
 const fs = require('fs');

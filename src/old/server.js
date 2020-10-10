@@ -20,6 +20,7 @@ var storage = multer.diskStorage({
         return cb(null, 'img-' + Date.now() + ext)
     }
 })
+
 var upload = multer({ storage: storage })
 
 const server = express();
