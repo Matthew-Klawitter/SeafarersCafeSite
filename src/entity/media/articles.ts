@@ -1,8 +1,8 @@
 import { POINT_CONVERSION_UNCOMPRESSED } from "constants";
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne} from "typeorm";
-import {ArticleType} from "./article_type";
-import {Picture} from "./pictures";
-import {Tag} from "./tags";
+import {ArticleType} from "./ArticleType";
+import {Picture} from "./Pictures";
+import {Tag} from "./Tags";
 
 @Entity()
 export class Article {
