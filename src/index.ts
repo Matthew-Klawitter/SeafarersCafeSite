@@ -1,43 +1,51 @@
 import {createConnection} from "typeorm";
 import express, { Request, Response } from 'express'
 import "reflect-metadata";
+import { AboutController } from './controllers/AboutController';
+import { AdminController } from './controllers/AdminController';
+import { ArticleController } from './controllers/ArticleController';
 import { IndexController } from './controllers/IndexController';
+import { StudiosController } from "./controllers/StudiosController";
 
 
-const multer = require('multer');
 const router = express();
 
-/*
-Storage location for photo uploads
-TODO: Prevent upload when disk usage reaches a specific threshold
-*/
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, __dirname+'/uploads/')
-    },
-    filename: function (req, file, cb) {
-        var ext = "";
-        if (file.originalname.includes(".")) {
-            ext = "." + file.originalname.split(".")[1];
-        }
-        return cb(null, 'img-' + Date.now() + ext)
-    }
-})
+// Application port
+const port = 3000;
 
-const upload = multer({ storage: storage })
-
+// Setup Controllers
+const aboutController = new AboutController();
+const adminController = new AdminController();
+const articleController = new ArticleController()
+const indexController = new IndexController();
+const studiosController = new StudiosController();
 
 /* Establish routes and start server */
 createConnection().then(async connection => {
-    var port = 3000;
+    // AboutController
+    router.get('/about', (req: Request, res: Response) => {
+        aboutController.index(req, res);
+    })
 
-    // Setup Controllers
-    const indexController = new IndexController();
-
-    // Establish routes
-    router.get('/', (req: Request, res: Response) => {
-        indexController.read(req, res);
+    // AdminController
+    router.get('/admin/login', (req: Request, res: Response) => {
+        indexController.index(req, res);
     });
+
+    // ArticleController
+    router.get('/articles', (req: Request, res: Response) => {
+        indexController.index(req, res);
+    });
+
+    // IndexController Routes
+    router.get('/', (req: Request, res: Response) => {
+        indexController.index(req, res);
+    });
+
+    // StudiosController
+    router.get('/studios', (req: Request, res: Response) => {
+        studiosController.index(req, res);
+    })
 
 
     router.listen(port, () => console.info(`Server is listening on port ${port}!`));
