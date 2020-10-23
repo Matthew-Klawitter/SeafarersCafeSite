@@ -8,9 +8,8 @@ import { IndexController } from './controllers/IndexController';
 import { StudiosController } from "./controllers/StudiosController";
 
 
+// Application server and port
 const router = express();
-
-// Application port
 const port = 3000;
 
 // Setup Controllers
@@ -20,7 +19,7 @@ const articleController = new ArticleController()
 const indexController = new IndexController();
 const studiosController = new StudiosController();
 
-/* Establish routes and start server */
+/* Attempt DB connection, establish routes, and start server */
 createConnection().then(async connection => {
     // AboutController
     router.get('/about', (req: Request, res: Response) => {
@@ -28,13 +27,21 @@ createConnection().then(async connection => {
     })
 
     // AdminController
+    router.get('/admin', (req: Request, res: Response) => {
+        // check for authorized cookie before directing to /admin/index
+        adminController.checkAuthorization(req, res);
+        adminController.index(req, res);
+    });
     router.get('/admin/login', (req: Request, res: Response) => {
-        indexController.index(req, res);
+        adminController.login(req, res);
+    });
+    router.post('/admin/auth', (req: Request, res: Response) => {
+        adminController.authenticate(req, res);
     });
 
     // ArticleController
     router.get('/articles', (req: Request, res: Response) => {
-        indexController.index(req, res);
+        articleController.index(req, res);
     });
 
     // IndexController Routes
@@ -46,7 +53,6 @@ createConnection().then(async connection => {
     router.get('/studios', (req: Request, res: Response) => {
         studiosController.index(req, res);
     })
-
 
     router.listen(port, () => console.info(`Server is listening on port ${port}!`));
 }).catch(error => console.log(error));
