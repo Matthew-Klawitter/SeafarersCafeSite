@@ -15,7 +15,7 @@ const port = 3000;
 // Setup Controllers
 const aboutController = new AboutController();
 const adminController = new AdminController();
-const articleController = new ArticleController()
+const articleController = new ArticleController();
 const indexController = new IndexController();
 const studiosController = new StudiosController();
 
