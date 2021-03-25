@@ -1,23 +1,16 @@
 <template>
   <div id="app">
-    <HomeHeader title="Seafarers' Cafe"/>
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <HomeFooter/>
+    <Home/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import HomeHeader from './components/header/HomeHeader.vue'
-import HomeFooter from './components/footer/HomeFooter.vue'
+import Home from './components/home/Home.vue'
 
 export default {
   name: 'App',
   components: {
-    HomeHeader,
-    HelloWorld,
-    HomeFooter
+    Home,
   }
 }
 </script>
