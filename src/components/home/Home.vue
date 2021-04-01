@@ -1,12 +1,18 @@
 <template>
   <div id="home">
     <HomeHeader title="Seafarers' Cafe"/>
+    <div id="home-content">
+      
+    </div>
     <HomeFooter/>
   </div>
 </template>
 
 <script>
 import HomeHeader from './components/HomeHeader.vue';
+
+
+
 import HomeFooter from './components/HomeFooter.vue';
 
 export default {
