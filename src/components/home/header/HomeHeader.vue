@@ -16,10 +16,8 @@
 
 <script>
 export default {
-  data() {
-    return {
-      title: 'Seafarers Cafe'
-    }
+  props: {
+    title: String
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <Header/>
+    <Header title="Seafarers Cafe"/>
     <div id="content">
       <router-view/>
     </div>
