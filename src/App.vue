@@ -4,7 +4,9 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
+@import '~@/../mdb/scss/index.free.scss';
+
 html {
   position: relative;
   min-height: 100%;
