@@ -1,14 +1,12 @@
 <template>
-  <div id="home-studios">
+  <div id="home-blog-featured">
+    <p>Blog page</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HomeStudios',
-  props: {
-    title: String
-  }
+  name: 'HomeBlogFeatured'
 }
 </script>
 
