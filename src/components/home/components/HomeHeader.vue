@@ -1,12 +1,12 @@
 <template>
-  <div class="home-header">
-    <div class="home-header-title">
+  <div id="home-header">
+    <div id="home-header-title">
       <h1> {{ title }} </h1>
     </div>
-    <div class="home-header-navbar">
+    <div id="home-header-navbar">
       <ul>
         <li>Blog</li>
-        <li>Podcast</li>
+        <li><a href="https://podcast.seafarers.cafe/">Podcast</li>
         <li>Studios</li>
         <li>About</li>
       </ul>
@@ -24,7 +24,7 @@ export default {
 </script>
 
 <style scoped>
-.home-header-navbar {
+#home-header-navbar {
   box-shadow: 0 4px 4px -2px lightgray;
   width: 100%;
 }
@@ -41,11 +41,11 @@ li {
   padding-right: .5em;
 }
 
-.home-header-navbar ul li {
+#home-header-navbar ul li {
   border-right: 2px solid black;
 }
 
-.home-header-navbar ul li:last-of-type {
+#home-header-navbar ul li:last-of-type {
   border-right: none;
 }
 </style>
