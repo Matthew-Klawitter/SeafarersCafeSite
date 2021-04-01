@@ -1,16 +1,24 @@
-<<<<<<< HEAD
-Configuration:
-- Requires mysql database. Include a `config.json` in `src` directory with the following structure:
-```json
-{
-    "database": {
-        "host": "localhost",
-        "user": "YOUR_USER",
-        "database": "YOUR_DB",
-        "password": "YOUR_PWD"
-    }
-}
-```
-=======
-# SeafarersCafeSite
+# seafarerscafesite
 
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
