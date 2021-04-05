@@ -1,5 +1,10 @@
 module.exports = {
-    devServer: {
-        port: 8080
+    configureWebpack: {
+      devServer: {
+        port: 3000,
+        watchOptions: {
+          poll: true,
+        },
+      },
     }
-}
+  };
