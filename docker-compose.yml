@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  seafarerscafesite:
+    image: seafarerscafesite
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    ports:
+      - 3000:3000
