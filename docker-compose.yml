@@ -1,15 +1,33 @@
 version: '3.4'
 
 services:
+  db:
+    image: mysql/mysql-server
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    volumes:
+      - my-db:/var/lib/mysql
+
   seafarerscafesite:
     image: seafarerscafesite
     build:
       context: .
       dockerfile: ./Dockerfile
+    network_mode: bridge
     volumes:
       - '.:/app'
       - '/app/node_modules'
     environment:
       - CHOKIDAR_USEPOLLING=true
     ports:
-      - 3000:3000
+      - 3000:3001
+volumes:
+  my-db:
