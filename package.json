@@ -5,6 +5,8 @@
   "description": "",
   "author": "",
   "scripts": {
+    "dev": "concurrently --kill-others \"npm run serve\" \"npm run server\"",
+    "server": "node src/server.js",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
@@ -20,14 +22,17 @@
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.4",
     "core-js": "^3.6.5",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "finale-rest": "^1.1.1",
     "jsonwebtoken": "^8.5.1",
     "mdb-vue-ui-kit": "^1.0.0-beta1",
     "multer": "^1.4.2",
-    "mysql": "^2.14.1",
     "mysql2": "^1.7.0",
+    "pg-hstore": "^2.3.3",
     "reflect-metadata": "^0.1.10",
     "request": "^2.88.0",
+    "sequelize": "^6.6.2",
     "showdown": "^1.9.1",
     "uuid": "^3.3.3",
     "vue": "^2.6.11",
@@ -43,11 +48,11 @@
     "@vue/test-utils": "^1.0.3",
     "babel-eslint": "^10.1.0",
     "chai": "^4.1.2",
+    "concurrently": "^6.0.2",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
-    "sequelize-cli": "^6.2.0",
     "vue-cli-plugin-mdb5": "~1.2.0",
     "vue-template-compiler": "^2.6.11"
   },
@@ -63,7 +68,9 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {},
+    "rules": {
+      "no-console": 0
+    },
     "overrides": [
       {
         "files": [

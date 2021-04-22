@@ -4,15 +4,16 @@ services:
   db:
     image: mysql/mysql-server
     restart: always
+    network_mode: host
     environment:
-      MYSQL_DATABASE: 'db'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
-      - 3306:3306
+      - ${DB_PORT}
     expose:
-      - 3306
+      - ${DB_PORT}
     volumes:
       - my-db:/var/lib/mysql
 
@@ -21,13 +22,20 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    network_mode: bridge
+    network_mode: host
     volumes:
       - '.:/app'
       - '/app/node_modules'
+    env_file:
+      - .env
     environment:
       - CHOKIDAR_USEPOLLING=true
     ports:
-      - 3000:3001
+      - ${FRONTEND_PORT}
+    expose:
+      - ${API_PORT}
+    depends_on:
+      - "db"
+
 volumes:
   my-db:
