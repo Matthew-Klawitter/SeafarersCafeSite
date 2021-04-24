@@ -5,8 +5,6 @@
   "description": "",
   "author": "",
   "scripts": {
-    "dev": "concurrently --kill-others \"npm run serve\" \"npm run server\"",
-    "server": "node src/server.js",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",

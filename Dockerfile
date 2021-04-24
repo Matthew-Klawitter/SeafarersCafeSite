@@ -5,4 +5,4 @@ COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 RUN npm install
 COPY . .
 EXPOSE ${FRONTEND_PORT}
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "serve"]
