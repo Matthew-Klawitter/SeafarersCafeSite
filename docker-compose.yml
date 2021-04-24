@@ -40,8 +40,8 @@ services:
     ports:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
     volumes:
-      - '.:/app/frontend'
-      - '/app/frontend/node_modules'
+      - '.:/frontend'
+      - '/frontend/node_module'
     depends_on:
       - 'api'
 

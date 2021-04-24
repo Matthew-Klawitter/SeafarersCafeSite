@@ -1,6 +1,6 @@
 FROM node:12.18-alpine
 ENV NODE_ENV=development
-WORKDIR /app
+WORKDIR /frontend
 COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 RUN npm install
 COPY . .
