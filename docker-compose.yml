@@ -41,7 +41,7 @@ services:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
     volumes:
       - '.:/frontend'
-      - '/frontend/node_module'
+      - '/frontend/node_modules'
     depends_on:
       - 'api'
 
