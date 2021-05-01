@@ -15,7 +15,7 @@ services:
     volumes:
       - server-db:/bitnami/mysql/data
 
-  api:
+  backend:
     image: seafarerscafesiteapi
     command: sh -c 'dockerize -wait tcp://db:${DB_PORT} -timeout 300s -wait-retry-interval 15s npm start'
     env_file:
@@ -23,15 +23,15 @@ services:
     ports:
       - ${API_PORT}:${API_PORT}
     volumes:
-      - '.:/app/api'
-      - '.:/app/api/node_modules'
+      - '.:/app/backend'
+      - '.:/app/backend/node_modules'
     depends_on:
       - 'db'
 
   frontend:
     image: seafarerscafesite
     build:
-      context: .
+      context: ./app/frontend
       dockerfile: ./Dockerfile
     env_file:
       - .env
@@ -40,10 +40,10 @@ services:
     ports:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
     volumes:
-      - '.:/frontend'
-      - '/frontend/node_modules'
+      - './app/frontend:/frontend'
+      - './frontend/node_modules'
     depends_on:
-      - 'api'
+      - 'backend'
 
 volumes:
   server-db:
