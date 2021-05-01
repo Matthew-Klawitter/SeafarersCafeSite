@@ -17,14 +17,17 @@ services:
 
   backend:
     image: seafarerscafesiteapi
+    build:
+      context: ./app/backend
+      dockerfile: ./Dockerfile
     command: sh -c 'dockerize -wait tcp://db:${DB_PORT} -timeout 300s -wait-retry-interval 15s npm start'
     env_file:
       - .env
     ports:
       - ${API_PORT}:${API_PORT}
     volumes:
-      - '.:/app/backend'
-      - '.:/app/backend/node_modules'
+      - './app/backend:/backend'
+      - './backend/node_modules'
     depends_on:
       - 'db'
 
