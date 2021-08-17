@@ -1,17 +1,17 @@
 module.exports = (database, DataTypes) => database.define("Project", {
-    Title: {
+    title: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    Author: {
+    author: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    Link: {
+    link: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    Description: {
+    description: {
         type: DataTypes.STRING,
         allowNull: false
     }

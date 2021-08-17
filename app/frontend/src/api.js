@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const client = axios.create({
-    baseURL: `http://db:${process.env.API_PORT}`,
+    baseURL: `http://seafarerscafesiteapi:${process.env.API_PORT}`,
     json: true
 })
 

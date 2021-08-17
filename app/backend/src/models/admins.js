@@ -1,13 +1,13 @@
 module.exports = (database, DataTypes) => database.define("Admin", {
-    Username: {
+    username: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    Password: {
+    password: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    Salt: {
+    salt: {
         type: DataTypes.STRING,
         allowNull: false
     }

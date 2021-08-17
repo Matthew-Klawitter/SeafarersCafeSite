@@ -1,21 +1,21 @@
 module.exports = (database, DataTypes) => database.define("Post", {
-    Title: {
+    title: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    Author: {
+    author: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    Description: {
+    description: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    Content: {
+    content: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    Published: {
+    published: {
         type: DataTypes.BOOLEAN
     }
 })

@@ -1,9 +1,9 @@
 module.exports = (database, DataTypes) => database.define("Photo", {
-    Name: {
+    name: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    URL: {
+    path: {
         type: DataTypes.STRING,
         allowNull: false
     }
