@@ -29,8 +29,7 @@ module.exports = function(app, db){
                 let user = {
                     username: req.body.username,
                     password: hash,
-                    salt: salt,
-                    email: req.body.email
+                    salt: salt
                 };
 
                 await db.create(user);
