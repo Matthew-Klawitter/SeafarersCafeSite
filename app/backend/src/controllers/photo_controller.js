@@ -27,7 +27,7 @@ var upload = multer({storage: storage, fileFilter: filter})
  * CRUD Photos
  * TODO: reformat this to support current REST implementation
  */
- module.exports = function(server, db){
+ module.exports = function(app, db, express){
     app.post('/db/photos/upload', upload.single('file'), async (req, res) => {
         try {
             const file = req.file;
@@ -125,8 +125,5 @@ var upload = multer({storage: storage, fileFilter: filter})
             return;
         }
     });
-
-    // Static route that publically serves all photos
-    app.use(express.static('/uploads/images'))
 }
 

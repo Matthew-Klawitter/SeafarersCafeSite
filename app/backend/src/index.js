@@ -3,6 +3,7 @@ require('dotenv').config()
 
 const cors = require('cors')
 const express = require('express')
+const path = require('path')
 const Sequelize = require('sequelize')
 
 // Sequelize database
@@ -40,7 +41,7 @@ adminResource(server, admins)
 
 // Photos
 var photoResource = require('./controllers/photo_controller.js')
-photosResource(server, photos)
+photoResource(server, photos, express)
 
 // Posts
 var postResource = require('./controllers/post_controller.js')
@@ -53,6 +54,9 @@ projectResource(server, projects)
 // Tags
 var tagResource = require('./controllers/tag_controller.js')
 tagResource(server, tags)
+
+// Static route for public files (such as photos)
+server.use(express.static(path.join(__dirname, 'public')))
 
 // Start backend service
 database.sync().then(() => {
