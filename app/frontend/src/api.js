@@ -7,15 +7,10 @@ const client = axios.create({
 
 export default {
     async execute (method, resource, data) {
-        let token = "test"
-
         return client({
             method,
             url: resource,
-            data,
-            headers: {
-                Authorization: `Bearers ${token}`
-            }
+            data: data
         }).then(req => {
             return req.data
         })
@@ -23,88 +18,85 @@ export default {
 
     // Admin API routes
     getAdmins() {
-        return this.execute('get', '/admins')
+        return this.execute('get', '/db/admins/all')
     },
     getAdmin(id) {
-        return this.execute('get', `/admins/${id}`)
+        return this.execute('get', `/db/admins/${id}`)
     },
     createAdmin(data) {
-        return this.execute('post', '/admins', data)
+        return this.execute('post', '/db/admins/create', data)
     },
-    updateAdmin(id, data) {
-        return this.execute('put', `/admins/${id}`, data)
-    },
-    deleteAdmin(id) {
-        return this.execute('delete', `/admins/${id}`)
+    // updateAdmin(id, data) {
+    //     return this.execute('post', `/db/admins/update`, data)
+    // },
+    deleteAdmin(data) {
+        return this.execute('post', `/db/admins/delete`, data)
     },
 
     // Photo API routes
     getPhotos() {
-        return this.execute('get', '/photos')
+        return this.execute('get', '/db/photos/all')
     },
     getPhoto(id) {
-        return this.execute('get', `/photos/${id}`)
-    },
-    getPhotoImg(id) {
-        return this.execute('get', `/photos/img/${id}`)
+        return this.execute('get', `/db/photos/${id}`)
     },
     createPhoto(data) {
-        return this.execute('post', '/photos', data)
+        return this.execute('post', '/db/photos/upload', data)
     },
-    updatePhoto(id, data) {
-        return this.execute('put', `/photos/${id}`, data)
-    },
-    deletePhoto(id) {
-        return this.execute('delete', `/photos/${id}`)
+    // updatePhoto(id, data) {
+    //     return this.execute('post', `/photos/${id}`, data)
+    // },
+    deletePhoto(data) {
+        return this.execute('post', `/db/photos/delete`, data)
     },
 
     // Posts API routes
     getPosts() {
-        return this.execute('get', '/posts')
+        return this.execute('get', '/db/posts/all')
     },
     getPost(id) {
-        return this.execute('get', `/posts/${id}`)
+        return this.execute('get', `/db/posts/${id}`)
     },
     createPost(data) {
-        return this.execute('post', '/posts', data)
+        return this.execute('post', '/db/posts/create', data)
     },
-    updatePost(id, data) {
-        return this.execute('put', `/posts/${id}`, data)
+    updatePost(data) {
+        return this.execute('post', `/db/posts/update`, data)
     },
-    deletePost(id) {
-        return this.execute('delete', `/posts/${id}`)
+    deletePost(data) {
+        return this.execute('post', `/db/posts/delete`, data)
     },
 
     // Project API routes
     getProjects() {
-        return this.execute('get', '/projects')
+        return this.execute('get', '/db/projects/all')
     },
     getProject(id) {
-        return this.execute('get', `/projects/${id}`)
+        return this.execute('get', `/db/projects/${id}`)
     },
     createProject(data) {
-        return this.execute('post', '/projects', data)
+        return this.execute('post', '/db/projects/create', data)
     },
-    updateProject(id, data) {
-        return this.execute('put', `/projects/${id}`, data)
+    updateProject(data) {
+        return this.execute('post', `/db/projects/update`, data)
     },
-    deleteProject(id) {
-        return this.execute('delete', `/projects/${id}`)
+    deleteProject(data) {
+        return this.execute('post', `/db/projects/delete`, data)
     },
 
     getTags() {
-        return this.execute('get', '/tags')
+        return this.execute('get', '/db/tags/all')
     },
     getTag(id) {
-        return this.execute('get', `/tags/${id}`)
+        return this.execute('get', `/db/tags/${id}`)
     },
     createTag(data) {
-        return this.execute('post', '/tags', data)
+        return this.execute('post', '/db/tags/create', data)
     },
-    updateTag(id, data) {
-        return this.execute('put', `/tags/${id}`, data)
+    updateTag(data) {
+        return this.execute('post', `/db/tags/update`, data)
     },
-    deleteTag(id) {
-        return this.execute('delete', `/tags/${id}`)
+    deleteTag(data) {
+        return this.execute('delete', `/db/tags/delete`, data)
     }
 }

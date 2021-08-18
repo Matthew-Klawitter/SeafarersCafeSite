@@ -96,28 +96,28 @@ module.exports = function(app, db){
         }
     });
 
-    app.post('/db/admins/update', async (req, res) => {
-        // TODO: Ability to update all account info not implemented on release. Will need methodology to update/change passwords
-        try {
-            let account = await db.findOne({where: {id: req.body.id}})
-            let dataAccount = account.get({plain: true});
+    // app.post('/db/admins/update', async (req, res) => {
+    //     // TODO: Ability to update all account info not implemented on release. Will need methodology to update/change passwords
+    //     try {
+    //         let account = await db.findOne({where: {id: req.body.id}})
+    //         let dataAccount = account.get({plain: true});
 
-            // let salt = crypto.randomBytes(32).toString("Base64");
-            // const hash = hashWithSalt(req.body.password, salt);
+    //         // let salt = crypto.randomBytes(32).toString("Base64");
+    //         // const hash = hashWithSalt(req.body.password, salt);
 
-            if (account != null){
-                account.update({
-                    username: req.body.username
-                });
-                account.save();
-            }
+    //         if (account != null){
+    //             account.update({
+    //                 username: req.body.username
+    //             });
+    //             account.save();
+    //         }
             
-            return;
-        } catch (e){
-            res.status(400).send(e.message);
-            return;
-        }
-    });
+    //         return;
+    //     } catch (e){
+    //         res.status(400).send(e.message);
+    //         return;
+    //     }
+    // });
      
     app.post('/db/admins/delete', async (req, res) => {
         try {
