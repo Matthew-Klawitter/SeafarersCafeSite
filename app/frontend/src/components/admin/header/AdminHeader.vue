@@ -29,11 +29,13 @@ export default {
   header {
     background-color: lightblue;
     display: grid;
+    text-align: left;
+    width: 20%;
   }
 
   ul {
     list-style-type: none;
-    text-align: center;
+    text-align: left;
     padding: 0;
   }
 

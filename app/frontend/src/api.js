@@ -1,9 +1,10 @@
 import axios from 'axios'
 
 const client = axios.create({
-    baseURL: `http://seafarerscafesiteapi:${process.env.API_PORT}`,
+    baseURL: `http://localhost:3000`,
     json: true
-})
+    }
+)
 
 export default {
     async execute (method, resource, data) {

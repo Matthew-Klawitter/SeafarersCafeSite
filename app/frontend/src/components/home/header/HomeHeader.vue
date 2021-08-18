@@ -26,6 +26,7 @@ export default {
   header {
     background-color: lightblue;
     display: grid;
+    text-align: center;
   }
 
   ul {
