@@ -17,11 +17,12 @@ export default {
 </script>
 
 <style scoped>
-footer {
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  background-color: lightblue;
-  text-align: center;
-}
+  footer {
+    clear: both;
+    position: relative;
+    height: 200px;
+    width: 100%;
+    background-color: lightblue;
+    text-align: center;
+  }
 </style>

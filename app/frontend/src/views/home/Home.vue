@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <Header title="Seafarers Cafe"/>
-    <div id="content">
+    <div class="content">
       <router-view/>
     </div>
     <Footer/>
@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style>
-  #content {
+  .content {
     height: 100%;
   }
 </style>

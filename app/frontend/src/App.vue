@@ -9,11 +9,11 @@
 
 html {
   position: relative;
-  min-height: 100%;
 }
 
 body {
-  margin: 0
+  min-height: 100%;
+  height: 100%;
 }
 
 #app {

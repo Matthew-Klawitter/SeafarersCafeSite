@@ -26,30 +26,30 @@ export default {
 </script>
 
 <style scoped>
+  #home-header-title h1{
+    text-align: center;
+  }
+
   header {
     background-color: lightblue;
+    left: 0;
+    bottom: 0;
     display: grid;
     text-align: left;
-    width: 20%;
   }
 
   ul {
     list-style-type: none;
-    text-align: left;
+    text-align: center;
     padding: 0;
   }
 
   li {
-    display: inline;
     padding-left: .5em;
     padding-right: .5em;
   }
 
   #home-header-navbar ul li {
-    border-right: 2px solid black;
-  }
-
-  #home-header-navbar ul li:last-of-type {
-    border-right: none;
+    border-bottom: 2px solid black;
   }
 </style>

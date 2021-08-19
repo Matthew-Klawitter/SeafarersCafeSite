@@ -1,8 +1,14 @@
 <template>
   <div id="admin">
-    <Header title="Seafarers Cafe Administration"/>
-    <div id="content">
-      <router-view/>
+    <div class="col">
+      <div class="left">
+        <Header title="Administration"/>
+      </div>
+      <div class="right">
+        <div class="content">
+          <router-view/>
+        </div>
+      </div>
     </div>
     <Footer/>
   </div>
@@ -22,5 +28,24 @@ export default {
 </script>
 
 <style scoped>
+  /* Separating header and content into two columns */
+  .col {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    float: left;
+  }
 
+  .left {
+    width: 25%;
+    height: 100%;
+    float: left;
+  }
+
+  .right {
+    width: 75%;
+    height: 100%;
+    float: right;
+    padding-left: 1em;
+  }
 </style>
