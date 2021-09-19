@@ -58,12 +58,12 @@ export default {
   .home-menu {
     grid-area: menu;
     background-color: whitesmoke;
+    min-width: 8em;
   }
 
   .home-content {
     grid-area: main;
-    padding-left: 1rem;
-    padding-top: 1rem;
+    padding: 1rem;
   }
 
   .home-footer {

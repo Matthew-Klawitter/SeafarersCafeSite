@@ -2,7 +2,7 @@
   <div id="admin">
     <div class="col">
       <div class="left">
-        <Header title="Administration"/>
+        <!-- <Header title="Administration"/> -->
       </div>
       <div class="right">
         <div class="content">
@@ -10,21 +10,21 @@
         </div>
       </div>
     </div>
-    <Footer/>
+    <!-- <Footer/> -->
   </div>
 </template>
 
 <script>
-import Header from '@/components/admin/header/AdminHeader.vue';
-import Footer from '@/components/admin/footer/AdminFooter.vue';
+// import Header from '@/components/admin/header/AdminHeader.vue';
+// import Footer from '@/components/admin/footer/AdminFooter.vue';
 
-export default {
-  name: 'Admin',
-  components: {
-    Header,
-    Footer
-  }
-}
+// export default {
+//   name: 'Admin',
+//   components: {
+//     Header,
+//     Footer
+//   }
+// }
 </script>
 
 <style scoped>

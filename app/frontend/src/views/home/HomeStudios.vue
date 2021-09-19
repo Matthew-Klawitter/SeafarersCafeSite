@@ -6,13 +6,13 @@
 </template>
 
 <script>
-import HomeStudioFeed from '@/components/home/studios/HomeStudioFeed.vue';
+// import HomeStudioFeed from '@/components/home/studios/HomeStudioFeed.vue';
 
 export default {
-  name: 'HomeStudios',
-  components: {
-    HomeStudioFeed
-  }
+  // name: 'HomeStudios',
+  // components: {
+  //   HomeStudioFeed
+  // }
 }
 </script>
 
