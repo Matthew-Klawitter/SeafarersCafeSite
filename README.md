@@ -1,6 +1,8 @@
 # SeafarersCafeSite
 The SeafarersCafeSite project aims to create a themed content-creator styled SPA web app that advertises the content of the Seafarers' Cafe group.
 
+[Image of current styling](https://raw.githubusercontent.com/Matthew-Klawitter/SeafarersCafeSite/master/app/examples/Example.PNG "Style example")
+
 Current features:
 1. Frontend SPA powered by Vue.js through Vue CLI and Bootstrap SASS
 2. Express REST API server that handles requests to a MySQL database
