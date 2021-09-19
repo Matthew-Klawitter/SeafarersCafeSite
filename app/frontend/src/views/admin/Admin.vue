@@ -37,13 +37,13 @@ export default {
   }
 
   .left {
-    width: 25%;
+    width: 10%;
     height: 100%;
     float: left;
   }
 
   .right {
-    width: 75%;
+    width: 80%;
     height: 100%;
     float: right;
     padding-left: 1em;

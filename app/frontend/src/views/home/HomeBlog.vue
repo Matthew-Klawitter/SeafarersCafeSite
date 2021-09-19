@@ -5,9 +5,6 @@
 </template>
 
 <script>
-export default {
-  name: 'HomeBlogFeatured'
-}
 </script>
 
 <style scoped>
