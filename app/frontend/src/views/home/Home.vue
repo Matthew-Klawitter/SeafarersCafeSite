@@ -26,7 +26,7 @@ const routes = [
 ]
 
 const links = [
-  {id:0, name:"Podcast", link:"https://podcast.seafarers.cafe/"}
+  {id:4, name:"Podcast", link:"https://podcast.seafarers.cafe/"}
 ]
 
 export default {

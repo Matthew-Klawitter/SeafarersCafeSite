@@ -1,6 +1,10 @@
 <template>
   <div id="home-about">
-    <h1>About Us</h1>
+    <div class="about-head">
+      <h1>About Us</h1>
+      <p>A little information on what the Seafarers Cafe is...</p>
+      <hr>
+    </div>
     <div class="about-block">
       <div class="about-block-title">
         <h2>The Seafarers Cafe</h2>
@@ -37,7 +41,7 @@
     <br>
     <div class="about-block">
       <div class="about-block-title">
-        <h2>Content</h2>
+        <h2>Our Content</h2>
       </div>
       <div class="about-block-content">
         Currently our content is composed of the following:
@@ -55,6 +59,9 @@
 </template>
 
 <style scoped>
+  .about-head {
+      text-align: center;
+    }
   .about-block {
     width: 100%;
     border: 1px solid rgb(40, 40, 40);
