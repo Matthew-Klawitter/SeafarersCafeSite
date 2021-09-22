@@ -18,7 +18,7 @@
 
 <script>
 import api from '@/api.js';
-import HomeStudioCard from '@/components/shared/studios/HomeStudioCard.vue';
+import HomeStudioCard from '@/components/shared/studios/StudioCard.vue';
 
 export default {
   name: 'HomeStudios',

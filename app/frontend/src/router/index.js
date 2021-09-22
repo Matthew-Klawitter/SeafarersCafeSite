@@ -5,6 +5,8 @@ import Home from '../views/home/Home.vue'
 import HomeAbout from '../views/home/HomeAbout.vue'
 import HomeBlog from '../views/home/HomeBlog.vue'
 import HomeStudios from '../views/home/HomeStudios.vue'
+import HomeBlogpost from '../views/home/HomeBlogpost.vue'
+import HomeBlogFeed from '../views/home/HomeBlogFeed.vue'
 // Admin routes
 import Admin from '../views/admin/Admin.vue'
 import AdminAccounts from '../views/admin/AdminAccounts.vue'
@@ -21,21 +23,32 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
+    component: Home
+  },
+  {
+    path: '/blog',
+    name: 'Blog',
+    component: HomeBlog,
     children: [
       {
-        path: 'blog',
-        component: HomeBlog
+        path: '/blog/feed',
+        component: HomeBlogFeed
       },
       {
-        path: 'studios',
-        component: HomeStudios
-      },
-      {
-        path: 'about',
-        component: HomeAbout
+        path: '/blog/:id',
+        component: HomeBlogpost
       }
     ]
+  },
+  {
+    path: '/studios',
+    name: 'Studios',
+    component: HomeStudios
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: HomeAbout
   },
   {
     path: '/admin',

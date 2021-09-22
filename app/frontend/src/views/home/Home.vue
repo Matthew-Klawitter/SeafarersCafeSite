@@ -1,72 +1,15 @@
 <template>
   <div id="home">
-    <div class="grid-container">
-      <div class="home-menu">
-        <Sidebar title="" :routes="routes" :links="links"/>
-      </div>
-      <div class="home-content">
-        <router-view/>
-      </div>
-      <div class="home-footer">
-        <Footer/>
-      </div>
+    <div class="home-head">
+      <h1>Welcome to the Seafarers Cafe!</h1>
+      <p>We're a tight knit group hoping to cover all sorts of content across games, technology, and coffee. Check out our "About" page to learn more!</p>
+      <hr>
     </div>
   </div>
 </template>
 
-<script>
-import Sidebar from '@/components/shared/sidebar/Sidebar.vue';
-import Footer from '@/components/shared/footer/Footer.vue';
-
-const routes = [
-  {id:0, name:"Home", route:"/"},
-  {id:1, name:"Blog", route:"/blog"},
-  {id:2, name:"Studios", route:"/studios"},
-  {id:3, name:"About", route:"/about"}
-]
-
-const links = [
-  {id:4, name:"Podcast", link:"https://podcast.seafarers.cafe/"}
-]
-
-export default {
-  name: 'Home',
-  components: {
-    Sidebar,
-    Footer
-  },
-  data() {
-    return {
-      routes,
-      links
-    }
-  }
-}
-</script>
-
 <style scoped>
-  .grid-container {
-    min-height: 100vh;
-    display: grid;
-    grid-template-areas: 
-      'menu main main main main main main main'
-      'menu main main main main main main main'
-      'menu footer footer footer footer footer footer footer';
-      grid-template-rows: auto 1fr auto;
-  }
-
-  .home-menu {
-    grid-area: menu;
-    background-color: whitesmoke;
-    min-width: 8em;
-  }
-
-  .home-content {
-    grid-area: main;
-    padding: 1rem;
-  }
-
-  .home-footer {
-    grid-area: footer;
+  .home-head {
+    text-align: center;
   }
 </style>

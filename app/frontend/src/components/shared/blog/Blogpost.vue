@@ -1,9 +1,8 @@
 <template>
-    <div id="blog-card">
-        <div class="blog-block-title">
+    <div id='blogpost'>
+         <div class="blog-block-title">
             <h2>{{post.title}}</h2>
             <p><pre>  by {{post.author}} on {{post.createdAt}} (Edited: {{post.updatedAt}})</pre></p>
-            <p>"{{post.description}}"</p>
             <hr>
         </div>
         <div class="blog-block-content">
@@ -13,16 +12,17 @@
 </template>
 
 <script>
-import VueMarkdownPlus from 'vue-markdown-plus';
+  import VueMarkdownPlus from 'vue-markdown-plus';
 
-export default {
+  export default {
+    name: 'Blogpost',
     props: {
         post: Object
     },
     components: {
-      VueMarkdownPlus
+    VueMarkdownPlus
     }
-}
+  }
 </script>
 
 <style scoped>
