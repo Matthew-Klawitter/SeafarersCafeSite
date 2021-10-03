@@ -30,9 +30,32 @@ server.use(cors())
 server.use(express.json())
 
 // Authorization
-// server.use((req, res, next) => {
+// TODO: Go into each controller, and add specified routing for public api routes ('/api/public/') and private ('/api/private')
+// Example below
+// public route
+// app.get('/api/publicInfo', (req, res) => {
+//     res.status(200).send('You are viewing public info');
+//   });
+  
+//   // protected route
+//   app.get('/api/profile', verifyToken, (req, res) => {
+//     oktaJwtVerifier.verifyAccessToken(req.token, 'api://default')
+//       .then(jwt => {
+//         res.send('You are viewing private profile info');
+//       })
+//       .catch(err => {
+//         res.sendStatus(403);
+//       });
+//   });
 
-// })
+
+server.use((req, res, next) => {
+    // require every request to have an authorization header
+    if (!req.headers.authorization) {
+        return next(new Error('Authorization header is required'))
+    }
+
+})
 
 // REST Endpoints
 // Admin

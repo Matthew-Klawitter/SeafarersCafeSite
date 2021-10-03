@@ -2,7 +2,7 @@
  * CRUD Posts
  */
  module.exports = function(app, db){
-    app.post('/db/posts/create', async (req, res) => {
+    app.post('/api/auth/posts/create', async (req, res) => {
         try {
             const postExists = await db.findOne({where: {name: req.body.name}});
 
@@ -22,7 +22,7 @@
         }
     });
 
-    app.get('/db/posts/all', async (req, res) => {
+    app.get('/api/pub/posts/all', async (req, res) => {
         try {
             let posts = await db.findAll();
             posts = posts.map(x => x.get({plain: true}));
@@ -43,7 +43,7 @@
         }
     });
 
-    app.get('/db/posts/:id', async (req, res) => {
+    app.get('/api/pub/posts/:id', async (req, res) => {
         try {
             let post = await db.findOne({where: {id: req.params.id}});
             post = post.get({plain: true});
@@ -64,7 +64,7 @@
         }
     });
 
-    app.post('/db/posts/update', async (req, res) => {
+    app.post('/api/auth/posts/update', async (req, res) => {
         try {
             let post = await db.findOne({where: {id: req.body.id}});
 
@@ -82,7 +82,7 @@
         }
     });
 
-    app.post('/db/posts/delete', async (req, res) => {
+    app.post('/api/auth/posts/delete', async (req, res) => {
         try {
             let post = await db.findOne({where: {id: req.body.id}})
 

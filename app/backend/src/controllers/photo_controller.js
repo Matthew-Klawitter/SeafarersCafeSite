@@ -28,7 +28,7 @@ var upload = multer({storage: storage, fileFilter: filter})
  * TODO: reformat this to support current REST implementation
  */
  module.exports = function(app, db, express){
-    app.post('/db/photos/upload', upload.single('file'), async (req, res) => {
+    app.post('/api/auth/photos/upload', upload.single('file'), async (req, res) => {
         try {
             const file = req.file;
 
@@ -62,7 +62,7 @@ var upload = multer({storage: storage, fileFilter: filter})
         }
     });
 
-    app.get('/db/photos/all', async (req, res) => {
+    app.get('/api/pub/photos/all', async (req, res) => {
         try {
             let photos = await db.findAll();
             photos = photos.map(x => x.get({plain: true}));
@@ -83,7 +83,7 @@ var upload = multer({storage: storage, fileFilter: filter})
         }
     });
 
-    app.get('/db/photos/:id', async (req, res) => {
+    app.get('/api/pub/photos/:id', async (req, res) => {
         try {
             let photo = await db.findOne({where: {id: req.params.id}});
             photo = photo.get({plain: true});
@@ -104,7 +104,7 @@ var upload = multer({storage: storage, fileFilter: filter})
         }
     });
 
-    app.delete('/db/photos/delete', async (req, res) => {
+    app.delete('/api/auth/photos/delete', async (req, res) => {
         try {
             let photo = await db.findOne({where: {id: req.body.id}})
 

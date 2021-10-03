@@ -11,93 +11,91 @@ export default {
         return client({
             method,
             url: resource,
-            data: data
+            data
+        }).then(req => {
+            return req.data
+        })
+    },
+    async executeAuth (method, resource, data) {
+        let accessToken = await Vue.prototype.$auth.getAccessToken()
+        return client({
+            method,
+            url: resource,
+            data,
+            headers: {
+                Authorization: `Bearers ${accessToken}`
+            }
         }).then(req => {
             return req.data
         })
     },
 
-    // Admin API routes
-    getAdmins() {
-        return this.execute('get', '/db/admins/all')
-    },
-    getAdmin(id) {
-        return this.execute('get', `/db/admins/${id}`)
-    },
-    createAdmin(data) {
-        return this.execute('post', '/db/admins/create', data)
-    },
-    // updateAdmin(id, data) {
-    //     return this.execute('post', `/db/admins/update`, data)
-    // },
-    deleteAdmin(data) {
-        return this.execute('post', `/db/admins/delete`, data)
-    },
-
     // Photo API routes
     getPhotos() {
-        return this.execute('get', '/db/photos/all')
+        return this.execute('get', '/api/pub/photos/all')
     },
     getPhoto(id) {
-        return this.execute('get', `/db/photos/${id}`)
+        return this.execute('get', `/api/pub/photos/${id}`)
     },
+    // Create and Delete require Auth
     createPhoto(data) {
-        return this.execute('post', '/db/photos/upload', data)
+        return this.executeAuth('post', '/api/auth/photos/upload', data)
     },
-    // updatePhoto(id, data) {
-    //     return this.execute('post', `/photos/${id}`, data)
-    // },
     deletePhoto(data) {
-        return this.execute('post', `/db/photos/delete`, data)
+        return this.executeAuth('post', `/api/auth/photos/delete`, data)
     },
 
     // Posts API routes
     getPosts() {
-        return this.execute('get', '/db/posts/all')
+        return this.execute('get', '/api/pub/posts/all')
     },
     getPost(id) {
-        return this.execute('get', `/db/posts/${id}`)
+        return this.execute('get', `/api/pub/posts/${id}`)
     },
+    // Create, Update, and Delete require Auth
     createPost(data) {
-        return this.execute('post', '/db/posts/create', data)
+        return this.executeAuth('post', '/api/auth/posts/create', data)
     },
     updatePost(data) {
-        return this.execute('post', `/db/posts/update`, data)
+        return this.executeAuth('post', `/api/auth/posts/update`, data)
     },
     deletePost(data) {
-        return this.execute('post', `/db/posts/delete`, data)
+        return this.executeAuth('post', `/api/auth/posts/delete`, data)
     },
 
     // Project API routes
     getProjects() {
-        return this.execute('get', '/db/projects/all')
+        return this.execute('get', '/api/pub/projects/all')
     },
     getProject(id) {
-        return this.execute('get', `/db/projects/${id}`)
+        return this.execute('get', `/api/pub/projects/${id}`)
     },
+    // Create, Update, and Delete require Auth
     createProject(data) {
-        return this.execute('post', '/db/projects/create', data)
+        return this.executeAuth('post', '/api/auth/projects/create', data)
     },
     updateProject(data) {
-        return this.execute('post', `/db/projects/update`, data)
+        return this.executeAuth('post', `/api/auth/projects/update`, data)
     },
     deleteProject(data) {
-        return this.execute('post', `/db/projects/delete`, data)
+        return this.executeAuth('post', `/api/auth/projects/delete`, data)
     },
 
+    // Tag API routes
     getTags() {
-        return this.execute('get', '/db/tags/all')
+        return this.execute('get', '/api/pub/tags/all')
     },
     getTag(id) {
-        return this.execute('get', `/db/tags/${id}`)
+        return this.execute('get', `/api/pub/tags/${id}`)
     },
+    // Create, Update, and Delete require Auth
     createTag(data) {
-        return this.execute('post', '/db/tags/create', data)
+        return this.executeAuth('post', '/api/auth/tags/create', data)
     },
     updateTag(data) {
-        return this.execute('post', `/db/tags/update`, data)
+        return this.executeAuth('post', `/api/auth/tags/update`, data)
     },
     deleteTag(data) {
-        return this.execute('delete', `/db/tags/delete`, data)
+        return this.executeAuth('delete', `/api/auth/tags/delete`, data)
     }
 }

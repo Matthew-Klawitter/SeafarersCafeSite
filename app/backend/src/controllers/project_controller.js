@@ -2,7 +2,7 @@
  * CRUD Projects
  */
  module.exports = function(app, db){
-    app.post('/db/projects/create', async (req, res) => {
+    app.post('/api/auth/projects/create', async (req, res) => {
         try {
             const projectExists = await db.findOne({where: {name: req.body.name}});
 
@@ -22,7 +22,7 @@
         }
     });
 
-    app.get('/db/projects/all', async (req, res) => {
+    app.get('/api/pub/projects/all', async (req, res) => {
         try {
             let projects = await db.findAll();
             projects = projects.map(x => x.get({plain: true}));
@@ -43,7 +43,7 @@
         }
     });
 
-    app.get('/db/projects/:id', async (req, res) => {
+    app.get('/api/pub/projects/:id', async (req, res) => {
         try {
             let project = await db.findOne({where: {id: req.params.id}});
             project = project.get({plain: true});
@@ -64,7 +64,7 @@
         }
     });
 
-    app.post('/db/projects/update', async (req, res) => {
+    app.post('/api/auth/projects/update', async (req, res) => {
         try {
             let project = await db.findOne({where: {id: req.body.id}});
 
@@ -82,7 +82,7 @@
         }
     });
 
-    app.post('/db/projects/delete', async (req, res) => {
+    app.post('/api/auth/projects/delete', async (req, res) => {
         try {
             let project = await db.findOne({where: {id: req.body.id}})
 

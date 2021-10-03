@@ -2,7 +2,7 @@
  * CRUD Tags
  */
  module.exports = function(app, db){
-    app.post('/db/tags/create', async (req, res) => {
+    app.post('/api/auth/tags/create', async (req, res) => {
         try {
             const tagExists = await db.findOne({where: {name: req.body.name}});
 
@@ -22,7 +22,7 @@
         }
     });
 
-    app.get('/db/tags/all', async (req, res) => {
+    app.get('/api/pub/tags/all', async (req, res) => {
         try {
             let tags = await db.findAll();
             tags = tags.map(x => x.get({plain: true}));
@@ -43,7 +43,7 @@
         }
     });
 
-    app.get('/db/tags/:id', async (req, res) => {
+    app.get('/api/pub/tags/:id', async (req, res) => {
         try {
             let tag = await db.findOne({where: {id: req.params.id}});
             tag = tag.get({plain: true});
@@ -64,7 +64,7 @@
         }
     });
 
-    app.post('/db/tags/update', async (req, res) => {
+    app.post('/api/auth/tags/update', async (req, res) => {
         try {
             let tag = await db.findOne({where: {id: req.body.id}});
 
@@ -82,7 +82,7 @@
         }
     });
 
-    app.post('/db/tags/delete', async (req, res) => {
+    app.post('/api/auth/tags/delete', async (req, res) => {
         try {
             let tag = await db.findOne({where: {id: req.body.id}})
 
