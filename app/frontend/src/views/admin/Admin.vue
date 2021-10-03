@@ -1,51 +1,41 @@
 <template>
-  <div id="admin">
-    <div class="col">
-      <div class="left">
-        <!-- <Header title="Administration"/> -->
+  <div id="home">
+    <div class="admin-head">
+      <h1>Welcome Administrator!</h1>
+      <p>Here you'll find some features to write blogs, projects, and upload photos.</p>
+      <hr>
+    </div>
+    <div class="admin-grid-container">
+      <div class="admin-menu">
+
       </div>
-      <div class="right">
-        <div class="content">
-          <router-view/>
-        </div>
+      <div class="admin-content">
+        <router-view/>
       </div>
     </div>
-    <!-- <Footer/> -->
   </div>
 </template>
 
-<script>
-// import Header from '@/components/admin/header/AdminHeader.vue';
-// import Footer from '@/components/admin/footer/AdminFooter.vue';
-
-// export default {
-//   name: 'Admin',
-//   components: {
-//     Header,
-//     Footer
-//   }
-// }
-</script>
-
 <style scoped>
-  /* Separating header and content into two columns */
-  .col {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    float: left;
+  .admin-head {
+    text-align: center;
+  }
+  .admin-grid-container {
+    min-height: 100vh;
+    display: grid;
+    grid-template-areas:
+      'menu main main main main main main main main main main'
+      'menu main main main main main main main main main main'
+      'menu main main main main main main main main main main';
+    grid-template-rows: auto 1fr auto;
   }
 
-  .left {
-    width: 10%;
-    height: 100%;
-    float: left;
+  .admin-menu {
+    grid-area: menu;
+    padding: 1rem;
   }
-
-  .right {
-    width: 80%;
-    height: 100%;
-    float: right;
-    padding-left: 1em;
+  .admin-content {
+    grid-area: main;
+    padding: 1rem;
   }
 </style>

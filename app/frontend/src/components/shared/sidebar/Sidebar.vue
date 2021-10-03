@@ -9,6 +9,7 @@
       <ul v-for="r in routes" :key="r.id">
         <li><router-link :to="r.route">{{ r.name }}</router-link></li>
       </ul>
+      <hr>
       <ul v-for="l in links" :key="l.id">
         <li><a :href="l.link">{{ l.name }}</a></li>
       </ul>
