@@ -15,12 +15,12 @@
 import VueMarkdownPlus from 'vue-markdown-plus';
 
 export default {
-    props: {
-        post: Object
-    },
-    components: {
-      VueMarkdownPlus
-    }
+  props: {
+    post: Object
+  },
+  components: {
+    VueMarkdownPlus
+  }
 }
 </script>
 

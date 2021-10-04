@@ -27,10 +27,10 @@
         }
     },
     async created() {
-        this.refreshProjects()
+        this.refresh()
     },
     methods: {
-        async refreshProjects(){
+        async refresh(){
           this.loading = true;
           this.posts = await api.getPosts();
           this.loading = false;

@@ -79,15 +79,15 @@ const routes = [
             component: CreatePost
           },
           {
-            path: '/admin/blog/delete',
+            path: '/admin/blog/delete/:id',
             component: DeletePost
           },
           {
-            path: '/admin/blog/update',
+            path: '/admin/blog/update/:id',
             component: UpdatePost
           },
           {
-            path: '/admin/blog/view',
+            path: '/admin/blog/view/:id',
             component: ViewPost
           }
         ]
@@ -101,15 +101,15 @@ const routes = [
             component: CreateProject
           },
           {
-            path: '/admin/projects/delete',
+            path: '/admin/projects/delete/:id',
             component: DeleteProject
           },
           {
-            path: '/admin/projects/update',
+            path: '/admin/projects/update/:id',
             component: UpdateProject
           },
           {
-            path: 'admin/projects/view',
+            path: 'admin/projects/view/:id',
             component: ViewProject
           }
         ]
@@ -123,11 +123,11 @@ const routes = [
             component: CreatePhoto
           },
           {
-            path: '/admin/photos/delete',
+            path: '/admin/photos/delete/:id',
             component: DeletePhoto
           },
           {
-            path: 'admin/photos/view',
+            path: 'admin/photos/view/:id',
             component: ViewPhoto
           }
         ]

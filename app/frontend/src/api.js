@@ -17,14 +17,14 @@ export default {
         })
     },
     async executeAuth (method, resource, data) {
-        let accessToken = await Vue.prototype.$auth.getAccessToken()
+        // let accessToken = await Vue.prototype.$auth.getAccessToken()
         return client({
             method,
             url: resource,
             data,
-            headers: {
-                Authorization: `Bearers ${accessToken}`
-            }
+            // headers: {
+            //     Authorization: `Bearers ${accessToken}`
+            // }
         }).then(req => {
             return req.data
         })

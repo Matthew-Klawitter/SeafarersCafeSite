@@ -20,7 +20,7 @@
         post: Object
     },
     components: {
-    VueMarkdownPlus
+      VueMarkdownPlus
     }
   }
 </script>

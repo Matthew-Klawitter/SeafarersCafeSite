@@ -1,7 +1,7 @@
 <template>
   <div id="admin-photos">
     <h1>Admin Photos</h1>
-
+    
   </div>
 </template>
 
