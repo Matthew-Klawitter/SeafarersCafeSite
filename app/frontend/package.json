@@ -24,6 +24,7 @@
     "express": "^4.17.1",
     "finale-rest": "^1.1.1",
     "jsonwebtoken": "^8.5.1",
+    "marked": "^3.0.4",
     "mdb-vue-ui-kit": "^1.0.0-beta1",
     "multer": "^1.4.2",
     "mysql2": "^1.7.0",

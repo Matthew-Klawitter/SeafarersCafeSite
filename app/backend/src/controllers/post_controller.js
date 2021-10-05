@@ -4,17 +4,8 @@
  module.exports = function(app, db){
     app.post('/api/auth/posts/create', async (req, res) => {
         try {
-            const postExists = await db.findOne({where: {name: req.body.name}});
-
-            if (postExists != null && postExists){
-                // This tag already exists. No need to insert another entry
-                console.log('Unable to POST post: Post already exists');
-                return;
-            }
-
-            // This tag doesn't exist, we can safely create one
             await db.create(req.body);
-            console.log('Successfully POST post: ' + req.body.name);
+            console.log('Successfully POST post: ' + req.body.title);
             return;
         } catch (e){
             res.status(400).send(e.message);
@@ -66,11 +57,15 @@
 
     app.post('/api/auth/posts/update', async (req, res) => {
         try {
+            console.log(req.body);
             let post = await db.findOne({where: {id: req.body.id}});
 
             if (post != null){
                 post.update({
-                    name: req.body.name
+                    title: req.body.title,
+                    author: req.body.author,
+                    description: req.body.description,
+                    content: req.body.content
                 });
                 post.save();
                 console.log('Successfully PUT post: ' + req.body.id);

@@ -21,7 +21,7 @@ export default {
         return client({
             method,
             url: resource,
-            data,
+            data
             // headers: {
             //     Authorization: `Bearers ${accessToken}`
             // }

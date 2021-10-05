@@ -14,8 +14,5 @@ module.exports = (database, DataTypes) => database.define("Post", {
     content: {
         type: DataTypes.STRING,
         allowNull: false
-    },
-    published: {
-        type: DataTypes.BOOLEAN
     }
 })

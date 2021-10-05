@@ -3,7 +3,7 @@
     <div class="admin-grid-container">
       <div class="admin-menu">
         <h1>New Post</h1>
-        <form id="new-post">
+        <form id="new-post" @submit.prevent="createPost">
           <label for="title">Post Title:</label><br>
           <input v-model="blogpost.title" type="text" id="title" name="title" value=""><br>
           <label for="author">Author:</label><br>
@@ -14,9 +14,6 @@
           <textarea v-model="blogpost.content" rows="4" cols="50" name="content" form="new-post">
             Enter text here...
           </textarea><br>
-
-          <markdown-editor v-model="blogpost.content"></markdown-editor>
-
           <input type="submit" value="Submit">
         </form>
       </div>
@@ -28,7 +25,7 @@
         <hr>
         {{blogpost.description}}
         <hr>
-        {{blogpost.content}}
+        <div v-html="markdownToHtml"></div>
       </div>
     </div>
   </div>
@@ -36,6 +33,7 @@
 
 <script>
   import api from '@/api.js';
+  import marked from 'marked';
 
   export default {
     name: 'ViewPost',
@@ -45,14 +43,19 @@
           title: '',
           author: '',
           description: '',
-          content: ''
+          content: 'test'
         }
       }
     },
     methods: {
-        async uploadPost(){
-            this.post = await api.createPost();
+        async createPost(){
+            await api.createPost(this.blogpost);
         }
+    },
+    computed: {
+      markdownToHtml(){
+        return marked(this.blogpost.content);
+      }
     }
   }
 </script>

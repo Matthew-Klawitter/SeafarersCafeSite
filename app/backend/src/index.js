@@ -13,8 +13,6 @@ const database = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process
     dialect: process.env.DB_DIALECT
 })
 
-const Admins = require('./models/admins.js')
-admins = Admins(database, Sequelize.DataTypes)
 const Photos = require('./models/photos.js')
 photos = Photos(database, Sequelize.DataTypes)
 const Posts = require('./models/posts.js')
@@ -49,19 +47,15 @@ server.use(express.json())
 //   });
 
 
-server.use((req, res, next) => {
-    // require every request to have an authorization header
-    if (!req.headers.authorization) {
-        return next(new Error('Authorization header is required'))
-    }
+// server.use((req, res, next) => {
+//     // require every request to have an authorization header
+//     if (!req.headers.authorization) {
+//         return next(new Error('Authorization header is required'))
+//     }
 
-})
+// })
 
 // REST Endpoints
-// Admin
-var adminResource = require('./controllers/admin_controller.js')
-adminResource(server, admins)
-
 // Photos
 var photoResource = require('./controllers/photo_controller.js')
 photoResource(server, photos, express)

@@ -1,13 +1,14 @@
 <template>
   <div class="blog-admin-crud-entry">
     <p>
-      Title: {{post.title}} | 
-      Author: {{post.author}} | 
-      Created: {{post.createdAt}} | 
-      Edited: {{post.updatedAt}} | 
-      <router-link :to="{path: '/admin/blog/view/' + post.id}">View | </router-link>
-      <router-link :to="{path: '/admin/blog/update/' + post.id}">Edit | </router-link>
-      <router-link :to="{path: '/admin/blog/delete/' + post.id}">Delete</router-link>
+      Id: {{post.id}} -
+      Title: {{post.title}} - 
+      Author: {{post.author}}
+      <span>
+        <router-link :to="{path: '/admin/blog/view/' + post.id}">View | </router-link>
+        <router-link :to="{path: '/admin/blog/update/' + post.id}">Edit | </router-link>
+        <router-link :to="{path: '/admin/blog/delete/' + post.id}">Delete</router-link>
+      </span>
     </p>
   </div>    
 </template>
@@ -21,5 +22,11 @@ export default {
 </script>
 
 <style scoped>
-
+  a {
+    text-align: right;
+  }
+  span {
+    display: inline;
+    float: right;
+  }
 </style>

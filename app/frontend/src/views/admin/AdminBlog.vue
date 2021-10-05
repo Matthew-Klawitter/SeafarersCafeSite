@@ -59,7 +59,7 @@ export default {
   }
 
   .admin-menu {
-    text-align: center;
+    text-align: left;
     grid-area: menu;
     padding: 1rem;
     border-right:1px solid rgb(40, 40, 40);
