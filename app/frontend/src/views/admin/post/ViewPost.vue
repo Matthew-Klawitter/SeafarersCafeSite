@@ -21,13 +21,17 @@
         }
     },
     async created() {
-        this.refreshProjects()
+        this.fetchPost(this.$route.params.id);
+    },
+    async beforeRouteUpdate(to, from, next) {
+      this.fetchPost(to.params.id);
+      next();
     },
     methods: {
-        async refreshProjects(){
-        this.loading = true;
-        this.post = await api.getPost(this.$route.params.id);
-        this.loading = false;
+        async fetchPost(id){
+          this.loading = true;
+          this.post = await api.getPost(id);
+          this.loading = false;
         }
     }
   }

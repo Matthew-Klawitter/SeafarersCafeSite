@@ -43,13 +43,14 @@
           title: '',
           author: '',
           description: '',
-          content: 'test'
+          content: ''
         }
       }
     },
     methods: {
         async createPost(){
             await api.createPost(this.blogpost);
+            //await this.$parent.refresh();
         }
     },
     computed: {

@@ -36,16 +36,21 @@
       }
     },
     async created() {
-        this.fetchPost()
+        this.fetchPost(this.$route.params.id)
+    },
+    async beforeRouteUpdate(to, from, next) {
+      this.fetchPost(to.params.id);
+      next();
     },
     methods: {
-        async fetchPost(){
+        async fetchPost(id){
           this.loading = true;
-          this.blogpost = await api.getPost(this.$route.params.id);
+          this.blogpost = await api.getPost(id);
           this.loading = false;
         },
         async deletePost(){
             await api.deletePost(this.blogpost);
+            await this.$parent.refresh();
         }
     },
     computed: {
