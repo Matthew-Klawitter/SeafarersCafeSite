@@ -13,14 +13,14 @@ const database = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process
     dialect: process.env.DB_DIALECT
 })
 
-const Photos = require('./models/photos.js')
-photos = Photos(database, Sequelize.DataTypes)
+// const Photos = require('./models/photos.js')
+// photos = Photos(database, Sequelize.DataTypes)
 const Posts = require('./models/posts.js')
 posts = Posts(database, Sequelize.DataTypes)
-const Projects = require('./models/projects.js')
-projects = Projects(database, Sequelize.DataTypes)
-const Tags = require('./models/tags.js')
-tags = Tags(database, Sequelize.DataTypes)
+// const Projects = require('./models/projects.js')
+// projects = Projects(database, Sequelize.DataTypes)
+// const Tags = require('./models/tags.js')
+// tags = Tags(database, Sequelize.DataTypes)
 
 // Express REST server
 let server = express()
@@ -56,21 +56,21 @@ server.use(express.json())
 // })
 
 // REST Endpoints
-// Photos
-var photoResource = require('./controllers/photo_controller.js')
-photoResource(server, photos, express)
+// // Photos
+// var photoResource = require('./controllers/photo_controller.js')
+// photoResource(server, photos, express)
 
 // Posts
 var postResource = require('./controllers/post_controller.js')
 postResource(server, posts)
 
 // Projects
-var projectResource = require('./controllers/project_controller.js')
-projectResource(server, projects)
+// var projectResource = require('./controllers/project_controller.js')
+// projectResource(server, projects)
 
-// Tags
-var tagResource = require('./controllers/tag_controller.js')
-tagResource(server, tags)
+// // Tags
+// var tagResource = require('./controllers/tag_controller.js')
+// tagResource(server, tags)
 
 // Static route for public files (such as photos)
 server.use(express.static(path.join(__dirname, 'public')))

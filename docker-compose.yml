@@ -27,7 +27,7 @@ services:
       - ${API_PORT}:${API_PORT}
     volumes:
       - './app/backend:/backend'
-      - './backend/node_modules'
+      - '/backend/node_modules'
     depends_on:
       - 'db'
 
@@ -44,7 +44,7 @@ services:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
     volumes:
       - './app/frontend:/frontend'
-      - './frontend/node_modules'
+      - '/frontend/node_modules'
     depends_on:
       - 'backend'
 

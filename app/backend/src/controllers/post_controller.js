@@ -6,9 +6,11 @@
         try {
             await db.create(req.body);
             console.log('Successfully POST post: ' + req.body.title);
+            res.sendStatus(200)
             return;
         } catch (e){
             res.status(400).send(e.message);
+            res.send(e)
             return;
         }
     });
@@ -69,6 +71,7 @@
                 });
                 post.save();
                 console.log('Successfully PUT post: ' + req.body.id);
+                res.sendStatus(200)
             }
             return;
         } catch (e){
@@ -84,6 +87,7 @@
             if (post != null){
                 await post.destroy();
                 console.log('Successfully DELETE post: ' + req.body.id);
+                res.sendStatus(200)
             }
             return;
         } catch (e){

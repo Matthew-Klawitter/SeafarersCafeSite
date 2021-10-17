@@ -49,8 +49,9 @@
     },
     methods: {
         async createPost(){
-            await api.createPost(this.blogpost);
-            //await this.$parent.refresh();
+          await api.createPost(this.blogpost).then(() => {
+            this.$router.push({path: '/admin/blog'});
+          })
         }
     },
     computed: {

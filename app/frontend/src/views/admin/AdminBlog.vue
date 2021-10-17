@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="admin-content">
-        <router-view/>
+        <router-view />
       </div>
     </div>
   </div>
@@ -31,14 +31,21 @@ export default {
   data() {
     return {
       loading: false,
-      posts: null
+      posts: null,
+      updateList: () => this.fetchPosts()
     }
   },
-  async created() {
-    this.refresh();
+  created() {
+    this.fetchPosts();
+  },
+  watch: {
+    $route (){
+      this.posts = null
+      this.fetchPosts();
+    }
   },
   methods: {
-    async refresh(){
+    async fetchPosts(){
       this.loading = true;
       this.posts = await api.getPosts();
       this.loading = false;

@@ -50,7 +50,7 @@
         },
         async deletePost(){
             await api.deletePost(this.blogpost);
-            await this.$parent.refresh();
+            this.$router.push({path: '/admin/blog'});
         }
     },
     computed: {
